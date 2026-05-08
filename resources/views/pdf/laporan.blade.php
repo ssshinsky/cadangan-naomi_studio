@@ -106,7 +106,7 @@
       <div class="brand-sub">Premium Dance Space &nbsp;·&nbsp; Yogyakarta</div>
     </div>
     <div class="header-right">
-      <div class="report-label">Laporan Keuangan</div>
+      <div class="report-label">Laporan Keuangan Bulanan</div>
       <div class="report-period">{{ date('F Y', mktime(0,0,0,$month,1,$year)) }}</div>
       <div class="report-date">Diterbitkan {{ now()->format('d M Y, H:i') }}</div>
     </div>
@@ -134,6 +134,7 @@
       <div class="card-sub">Profit margin {{ $margin }}%</div>
     </div>
   </div>
+
 
   {{-- GRAFIK CSS BAR CHART --}}
   @php

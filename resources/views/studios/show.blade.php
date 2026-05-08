@@ -165,7 +165,7 @@
         <div class="flex items-center justify-center gap-4 mb-16">
             <div class="flex items-center gap-1">
                 @for($i = 1; $i <= 5; $i++)
-                <span class="material-symbols-outlined text-3xl {{ $i <= round($avgRating) ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                <span class="material-symbols-outlined text-3xl {{ $i <= round($avgRating) ? 'text-yellow-400' : 'text-charcoal/20' }}" style="{{ $i <= round($avgRating) ? "font-variation-settings: 'FILL' 1;" : "font-variation-settings: 'FILL' 0;" }}">star</span>
                 @endfor
             </div>
             <span class="text-4xl font-black text-charcoal">{{ number_format($avgRating, 1) }}</span>
@@ -196,7 +196,7 @@
                     </div>
                     <div class="flex items-center gap-1">
                         @for($i = 1; $i <= 5; $i++)
-                        <span class="material-symbols-outlined text-base {{ $i <= $review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                        <span class="material-symbols-outlined text-base {{ $i <= $review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}" style="{{ $i <= $review->rating ? "font-variation-settings: 'FILL' 1;" : "font-variation-settings: 'FILL' 0;" }}">star</span>
                         @endfor
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Mentor;
 use App\Models\OpenClass;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ class OpenClassSeeder extends Seeder
         $classes = [
             [
                 'title'           => 'Ladies with LINTANG',
-                'instructor_name' => 'Coach Lintang',
+                'mentor_name'     => 'LINTANG',
                 'description'     => 'Choreography class yang empowering. Fokus pada ekspresi dan kepercayaan diri melalui gerakan tari modern.',
                 'price'           => 150000,
                 'song_title'      => 'Flowers - Miley Cyrus',
@@ -27,7 +28,7 @@ class OpenClassSeeder extends Seeder
             ],
             [
                 'title'           => 'Contemporary Flow',
-                'instructor_name' => 'Coach Dara',
+                'mentor_name'     => 'DARA',
                 'description'     => 'Jelajahi gerakan cair dan ekspresi emosional melalui tari kontemporer. Cocok untuk semua level.',
                 'price'           => 120000,
                 'song_title'      => 'As it Was - Harry Styles',
@@ -38,7 +39,7 @@ class OpenClassSeeder extends Seeder
             ],
             [
                 'title'           => 'Hip Hop Foundation',
-                'instructor_name' => 'Coach Dyo',
+                'mentor_name'     => 'DYO',
                 'description'     => 'Pelajari dasar-dasar hip hop dance. Fokus pada rhythm, bounce, dan groove khas urban dance.',
                 'price'           => 100000,
                 'song_title'      => 'Yeah! - Usher',
@@ -50,20 +51,26 @@ class OpenClassSeeder extends Seeder
         ];
 
         foreach ($classes as $class) {
-            OpenClass::create([
-                'created_by'      => $admin->id,
-                'title'           => $class['title'],
-                'slug'            => Str::slug($class['title']),
-                'instructor_name' => $class['instructor_name'],
-                'description'     => $class['description'],
-                'price'           => $class['price'],
-                'song_title'      => $class['song_title'],
-                'whatsapp_link'   => $class['whatsapp_link'],
-                'day_of_week'     => $class['day_of_week'],
-                'time_start'      => $class['time_start'],
-                'time_end'        => $class['time_end'],
-                'is_active'       => true,
-            ]);
+            $mentor = Mentor::where('name', 'like', '%' . $class['mentor_name'] . '%')->first();
+
+            if ($mentor) {
+                OpenClass::create([
+                    'created_by'      => $admin->id,
+                    'title'           => $class['title'],
+                    'slug'            => Str::slug($class['title']),
+                    'mentor_id'       => $mentor->id,
+                    'instructor_name' => $mentor->name,
+                    'description'     => $class['description'],
+                    'price'           => $class['price'],
+                    'song_title'      => $class['song_title'],
+                    'whatsapp_link'   => $class['whatsapp_link'],
+                    'day_of_week'     => $class['day_of_week'],
+                    'time_start'      => $class['time_start'],
+                    'time_end'        => $class['time_end'],
+                    'is_active'       => true,
+                ]);
+            }
         }
     }
 }
+

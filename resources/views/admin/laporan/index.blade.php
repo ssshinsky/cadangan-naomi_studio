@@ -10,31 +10,31 @@
             <p class="text-naomi-muted text-sm mt-1 font-light">Rekapitulasi arus kas masuk dan keluar studio</p>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
             <form action="{{ route('admin.laporan.index') }}" method="GET"
-                  class="flex items-center gap-2 bg-white border border-charcoal/5 p-1.5 rounded-2xl shadow-sm">
-                <select name="month" class="bg-transparent border-none text-xs font-bold text-charcoal focus:ring-0 cursor-pointer px-3">
+                  class="flex flex-wrap items-center gap-2 bg-white border border-charcoal/5 p-3 rounded-2xl shadow-sm">
+                <select name="month" class="bg-transparent border border-charcoal/10 rounded-2xl text-xs font-bold text-charcoal focus:outline-none px-3 py-2">
                     @foreach(range(1,12) as $m)
                     <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }}>
                         {{ strtoupper(date('F', mktime(0,0,0,$m,1))) }}
                     </option>
                     @endforeach
                 </select>
-                <div class="w-[1px] h-4 bg-charcoal/10"></div>
-                <select name="year" class="bg-transparent border-none text-xs font-bold text-charcoal focus:ring-0 cursor-pointer px-3">
+                <select name="year" class="bg-transparent border border-charcoal/10 rounded-2xl text-xs font-bold text-charcoal focus:outline-none px-3 py-2">
                     @for($y = date('Y'); $y >= 2024; $y--)
                     <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
                     @endfor
                 </select>
-                <button type="submit" class="bg-charcoal text-white p-2 rounded-xl hover:bg-primary transition-all">
-                    <span class="material-symbols-outlined text-sm block">filter_list</span>
+
+                <button type="submit" class="bg-charcoal text-white px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-primary transition-all">
+                    Filter
                 </button>
             </form>
 
             <a href="{{ route('admin.laporan.export-pdf', ['month' => $month, 'year' => $year]) }}"
                class="px-5 py-3 bg-primary text-white rounded-xl text-xs font-black uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-primary/20 hover:bg-charcoal transition-all">
                 <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
-                Export PDF
+                Download Laporan
             </a>
         </div>
     </div>
@@ -88,6 +88,7 @@
             </p>
         </div>
     </div>
+
 
     {{-- GRAFIK 6 BULAN TERAKHIR --}}
     <div class="bg-white rounded-[2.5rem] border border-charcoal/5 shadow-sm p-8 mb-8">

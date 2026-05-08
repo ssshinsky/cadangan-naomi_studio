@@ -157,6 +157,87 @@
                     </div>
                 </div>
 
+                {{-- REVIEW SECTION --}}
+                @if($booking->booking_status === 'completed')
+                <div class="px-8 pb-8">
+                    <div class="bg-naomi-white rounded-3xl border border-charcoal/5 p-8 mb-8">
+                        <h3 class="serif-title text-2xl font-bold mb-4 text-charcoal">Review Booking</h3>
+
+                        @if(session('success'))
+                        <div class="mb-6 rounded-2xl bg-green-50 border border-green-100 p-4 text-sm text-green-700">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                        @if(session('error'))
+                        <div class="mb-6 rounded-2xl bg-red-50 border border-red-100 p-4 text-sm text-red-700">
+                            {{ session('error') }}
+                        </div>
+                        @endif
+
+                        @if(!$booking->review)
+                        <div x-data="{ rating: 0, hovered: 0 }">
+                            <form method="POST" action="{{ route('reviews.store') }}">
+                                @csrf
+                                <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    <h4 class="text-sm font-black uppercase tracking-[0.2em] text-charcoal">Berikan Review Anda</h4>
+                                </div>
+
+                                <div class="flex items-center gap-1 mb-4">
+                                    @for($i = 1; $i <= 5; $i++)
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="rating" value="{{ $i }}" class="sr-only"
+                                               x-on:change="rating = {{ $i }}" required>
+                                        <span class="material-symbols-outlined text-3xl transition-colors"
+                                              x-on:mouseenter="hovered = {{ $i }}"
+                                              x-on:mouseleave="hovered = 0"
+                                              :class="(hovered >= {{ $i }} || (hovered === 0 && rating >= {{ $i }})) ? 'text-yellow-400' : 'text-charcoal/20'"
+                                              :style="(hovered >= {{ $i }} || (hovered === 0 && rating >= {{ $i }})) ? 'font-variation-settings: \"FILL\" 1;' : 'font-variation-settings: \"FILL\" 0;'">
+                                            star
+                                        </span>
+                                    </label>
+                                    @endfor
+                                    <span class="text-xs text-charcoal/40 font-bold ml-2" x-text="rating > 0 ? rating + '/5' : 'Pilih rating'"></span>
+                                </div>
+
+                                <textarea name="comment" rows="4"
+                                          placeholder="Tulis pengalaman Anda dengan booking ini... (opsional)"
+                                          maxlength="1000"
+                                          class="w-full border border-charcoal/10 rounded-2xl px-5 py-4 text-sm text-charcoal placeholder-charcoal/30 focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none mb-4"></textarea>
+
+                                <button type="submit"
+                                        class="px-8 py-3 bg-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-primary/20 hover:bg-charcoal transition-all">
+                                    Kirim Review
+                                </button>
+                            </form>
+                        </div>
+                        @else
+                        <div>
+                            <h4 class="text-sm font-black uppercase tracking-[0.2em] text-charcoal mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary text-lg">rate_review</span>
+                                Review Anda
+                            </h4>
+                            <div class="flex items-center gap-1 mb-3">
+                                @for($i = 1; $i <= 5; $i++)
+                                <span class="material-symbols-outlined text-xl {{ $i <= $booking->review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}"
+                                      style="{{ $i <= $booking->review->rating ? "font-variation-settings: 'FILL' 1;" : "font-variation-settings: 'FILL' 0;" }}">
+                                    star
+                                </span>
+                                @endfor
+                                <span class="text-xs text-charcoal/50 font-bold ml-2">{{ $booking->review->rating }}/5</span>
+                            </div>
+                            @if($booking->review->comment)
+                            <p class="text-charcoal/70 text-sm leading-relaxed italic">"{{ $booking->review->comment }}"</p>
+                            @endif
+                            <p class="text-[10px] text-charcoal/30 font-bold mt-3 uppercase tracking-[0.2em]">Dikirim {{ $booking->review->created_at->format('d M Y') }}</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                @endif
+
                 {{-- Info --}}
                 <div class="px-8 pb-10">
                     <h3 class="serif-title text-2xl font-bold mb-5 flex items-center gap-2 text-charcoal">
@@ -191,7 +272,7 @@
                         </a>
                     @elseif(in_array($displayStatus, ['confirmed', 'waiting_settlement', 'completed']))
                         <a href="{{ route('profil.invoice', $booking->id) }}"
-                           class="flex-1 w-full flex items-center justify-center gap-3 px-10 py-5 bg-blue-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-blue-700 transition-all">
+                           class="flex-1 w-full flex items-center justify-center gap-3 px-10 py-5 bg-charcoal text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl hover:bg-charcoal/80 transition-all">
                             <span class="material-symbols-outlined text-lg">download</span>
                             Download Invoice PDF
                         </a>

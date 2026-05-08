@@ -53,7 +53,7 @@
                         </div>
                         <div>
                             <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-1">Mentor</p>
-                            <p class="text-xl font-bold text-charcoal">{{ $class->instructor_name }}</p>
+                            <p class="text-xl font-bold text-charcoal">{{ $class->mentor ? $class->mentor->name : $class->instructor_name }}</p>
                         </div>
                     </div>
 
@@ -177,7 +177,7 @@
                         <div class="bg-naomi-surface/50 rounded-2xl p-6 border border-charcoal/5">
                             <div class="flex items-center gap-2 mb-3">
                                 <div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined text-primary text-sm">star</span>
+                                    <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
                                 </div>
                                 <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black">Keunggulan</p>
                             </div>

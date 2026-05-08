@@ -111,6 +111,12 @@
                 <span class="text-sm font-bold tracking-wide">Kelola Kelas</span>
             </a>
 
+            <a href="{{ route('admin.mentors.index') }}"
+               class="{{ request()->is('admin/mentors*') ? 'nav-active' : '' }} group flex items-center gap-4 px-5 py-4 rounded-2xl text-charcoal/60 hover:bg-naomi-bg/70 transition-all duration-300">
+                <span class="material-symbols-outlined group-hover:scale-110">person_search</span>
+                <span class="text-sm font-bold tracking-wide">Kelola Mentor</span>
+            </a>
+
             <a href="{{ route('admin.maintenance.index') }}" 
                class="{{ request()->is('admin/maintenance') ? 'nav-active' : '' }} group flex items-center gap-4 px-5 py-4 rounded-2xl text-charcoal/60 hover:bg-naomi-bg/70 transition-all duration-300">
                 <span class="material-symbols-outlined group-hover:scale-110">engineering</span>

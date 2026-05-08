@@ -55,32 +55,20 @@
                     @error('title') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Nama Mentor / Instruktur</label>
-                    <input type="text" name="instructor_name" value="{{ old('instructor_name', $class->instructor_name ?? '') }}"
-                           placeholder="Contoh: Coach Sarah"
-                           class="w-full bg-naomi-bg/20 border border-naomi-muted/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all">
-                    @error('instructor_name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Pilih Mentor dari Database (Opsional)</label>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Pilih Mentor</label>
                     <select name="mentor_id"
                             class="w-full bg-naomi-bg/20 border border-naomi-muted/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all">
-                        <option value="">— Tidak ada mentor —</option>
-                        @foreach($mentors as $mentor)
-                            <option value="{{ $mentor->id }}"
-                                {{ old('mentor_id', $class->mentor_id ?? '') == $mentor->id ? 'selected' : '' }}>
-                                {{ $mentor->name }}
-                            </option>
-                        @endforeach
+                        <option value="">— Pilih Mentor —</option>
+                        @if(isset($mentors))
+                            @foreach($mentors as $mentor)
+                                <option value="{{ $mentor->id }}"
+                                    {{ old('mentor_id', $class->mentor_id ?? '') == $mentor->id ? 'selected' : '' }}>
+                                    {{ $mentor->name }}
+                                </option>
+                            @endforeach
+                        @endif
                     </select>
-                    @if(isset($class) && $class->mentor_id && !$class->mentor)
-                        <p class="text-amber-500 text-xs mt-1">
-                            <span class="material-symbols-outlined text-xs align-middle">warning</span>
-                            Mentor sebelumnya sudah dihapus dari database.
-                        </p>
-                    @endif
                     @error('mentor_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 

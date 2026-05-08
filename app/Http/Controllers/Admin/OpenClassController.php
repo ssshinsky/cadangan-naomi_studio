@@ -74,7 +74,7 @@ class OpenClassController extends Controller
     {
         $request->validate([
             'title'           => ['required', 'string', 'max:255'],
-            'instructor_name' => ['required', 'string', 'max:255'],
+            'mentor_id'       => ['required', 'exists:mentors,id'],
             'description'     => ['nullable', 'string'],
             'price'           => ['required', 'integer', 'min:0'],
             'song_title'      => ['nullable', 'string', 'max:255'],
@@ -83,13 +83,14 @@ class OpenClassController extends Controller
             'time_start'      => ['required'],
             'time_end'        => ['required'],
             'thumbnail'       => ['nullable', 'image', 'max:2048'],
-            'mentor_id'       => ['nullable', 'exists:mentors,id'],
         ]);
+
+        $mentor = \App\Models\Mentor::find($request->mentor_id);
 
         $data = [
             'title'           => $request->title,
             'slug'            => Str::slug($request->title),
-            'instructor_name' => $request->instructor_name,
+            'instructor_name' => $mentor->name,
             'description'     => $request->description,
             'price'           => $request->price,
             'song_title'      => $request->song_title,
@@ -98,7 +99,7 @@ class OpenClassController extends Controller
             'time_start'      => $request->time_start,
             'time_end'        => $request->time_end,
             'is_active'       => $request->boolean('is_active'),
-            'mentor_id'       => $request->mentor_id ?: null,
+            'mentor_id'       => $request->mentor_id,
         ];
 
         if ($request->hasFile('thumbnail')) {

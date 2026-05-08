@@ -174,7 +174,7 @@
                     {{-- Rating --}}
                     <div class="flex items-center gap-1">
                         @for($i = 1; $i <= 5; $i++)
-                        <span class="material-symbols-outlined text-lg {{ $i <= $review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                        <span class="material-symbols-outlined text-lg {{ $i <= $review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}" style="{{ $i <= $review->rating ? "font-variation-settings: 'FILL' 1;" : "font-variation-settings: 'FILL' 0;" }}">star</span>
                         @endfor
                     </div>
 

@@ -42,8 +42,8 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     <div class="absolute top-5 left-5">
-                        <span class="bg-naomi-white/90 backdrop-blur-md text-primary text-[10px] font-black px-4 py-1.5 rounded-full shadow-sm uppercase tracking-widest">
-                            {{ $class->mentor ? $class->mentor->name : $class->instructor_name }}
+                        <span class="bg-yellow-100 text-primary text-[10px] font-black px-4 py-1.5 rounded-full shadow-sm uppercase tracking-widest">
+                            Mentor: {{ $class->mentor ? $class->mentor->name : $class->instructor_name }}
                         </span>
                     </div>
                 </div>
@@ -58,12 +58,10 @@
                         {{ $class->title }}
                     </h3>
 
-                    @if($class->song_title)
-                    <div class="flex items-center gap-2 text-[10px] font-bold text-charcoal/40 mb-4 italic">
-                        <span class="material-symbols-outlined text-xs">music_note</span>
-                        {{ $class->song_title }}
+                    <div class="flex items-center gap-2 text-[10px] font-bold text-charcoal/40 mb-4">
+                        <span class="material-symbols-outlined text-xs">person</span>
+                        <span>Mentor: {{ $class->mentor ? $class->mentor->name : $class->instructor_name }}</span>
                     </div>
-                    @endif
 
                     <p class="text-charcoal/60 text-sm font-light leading-relaxed mb-8 flex-grow">
                         {{ $class->description }}
