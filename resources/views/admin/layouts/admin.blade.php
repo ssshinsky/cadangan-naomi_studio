@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
         tailwind.config = {
@@ -153,6 +154,91 @@
             </div>
 
             <div class="flex items-center gap-6">
+                @php
+                    $unreadCount = \Illuminate\Support\Facades\DB::table('notifications')
+                        ->whereNull('read_at')
+                        ->where('notifiable_type', 'App\Models\Admin')
+                        ->count();
+                    $latestNotifications = \Illuminate\Support\Facades\DB::table('notifications')
+                        ->where('notifiable_type', 'App\Models\Admin')
+                        ->orderByDesc('created_at')
+                        ->limit(5)
+                        ->get()
+                        ->map(function ($n) {
+                            $n->data = json_decode($n->data, true);
+                            return $n;
+                        });
+                @endphp
+
+                {{-- Notification Bell --}}
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="relative p-2 rounded-xl text-charcoal/60 hover:bg-naomi-surface transition-colors duration-200">
+                        <span class="material-symbols-outlined text-2xl">notifications</span>
+                        @if($unreadCount > 0)
+                            <span class="absolute top-1 right-1 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center px-1 leading-none">
+                                {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                            </span>
+                        @endif
+                    </button>
+
+                    {{-- Dropdown --}}
+                    <div x-show="open"
+                         @click.outside="open = false"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="absolute right-0 mt-2 w-80 bg-naomi-white rounded-2xl shadow-xl border border-naomi-muted/20 z-50 overflow-hidden"
+                         style="display: none;">
+
+                        {{-- Header --}}
+                        <div class="flex items-center justify-between px-5 py-4 border-b border-naomi-muted/20">
+                            <h3 class="text-sm font-black text-charcoal">Notifikasi</h3>
+                            @if($unreadCount > 0)
+                                <form method="POST" action="{{ route('admin.notifications.read-all') }}">
+                                    @csrf
+                                    <button type="submit" class="text-[11px] font-bold text-primary hover:underline">
+                                        Tandai Semua Dibaca
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+
+                        {{-- List --}}
+                        <div class="divide-y divide-naomi-muted/10 max-h-72 overflow-y-auto custom-scrollbar">
+                            @forelse($latestNotifications as $notif)
+                                <a href="{{ route('admin.notifications.read', $notif->id) }}"
+                                   class="flex items-start gap-3 px-5 py-4 hover:bg-naomi-bg transition-colors duration-150 {{ is_null($notif->read_at) ? 'bg-primary/5' : '' }}">
+                                    <div class="mt-0.5 size-8 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                        <span class="material-symbols-outlined text-base text-primary">calendar_month</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs font-bold text-charcoal truncate">
+                                            {{ $notif->data['customer_name'] ?? 'Customer' }}
+                                        </p>
+                                        <p class="text-[11px] text-charcoal/60 truncate">
+                                            Booking #{{ $notif->data['booking_code'] ?? '-' }}
+                                        </p>
+                                        <p class="text-[10px] text-naomi-muted mt-0.5">
+                                            {{ \Carbon\Carbon::parse($notif->created_at)->diffForHumans() }}
+                                        </p>
+                                    </div>
+                                    @if(is_null($notif->read_at))
+                                        <div class="size-2 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
+                                    @endif
+                                </a>
+                            @empty
+                                <div class="px-5 py-8 text-center">
+                                    <span class="material-symbols-outlined text-3xl text-naomi-muted">notifications_off</span>
+                                    <p class="text-xs text-naomi-muted mt-2">Tidak ada notifikasi</p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex items-center gap-4 pl-6 border-l border-naomi-muted/30">
                     <div class="text-right hidden sm:block">
                         <p class="text-sm font-black text-charcoal leading-none">Admin Naomi</p>

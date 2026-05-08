@@ -56,6 +56,10 @@
                 <div class="flex items-center gap-3 mb-6">
                     <div class="size-8 bg-primary text-white rounded-xl flex items-center justify-center text-xs font-black">1</div>
                     <h2 class="font-black text-charcoal text-lg">Pilih Tanggal</h2>
+                    <button onclick="openBookingFlowModal()" class="ml-auto flex items-center gap-1.5 border border-charcoal/20 text-charcoal/60 hover:border-primary hover:text-primary rounded-xl px-3 py-1.5 text-[11px] font-bold transition-all">
+                        <span class="material-symbols-outlined text-sm">info</span>
+                        Alur Booking
+                    </button>
                 </div>
 
                 {{-- Mini Calendar Grid --}}
@@ -287,6 +291,68 @@
                 <span class="material-symbols-outlined text-sm">check_circle</span>
                 Konfirmasi Jam
             </button>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Alur Booking --}}
+<div id="bookingFlowModal" class="hidden fixed inset-0 bg-charcoal/70 backdrop-blur-sm flex items-center justify-center z-50 p-4" onclick="handleBookingFlowBackdrop(event)">
+    <div class="bg-naomi-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden">
+
+        {{-- Header --}}
+        <div class="bg-charcoal px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-naomi-white/70 text-xl">info</span>
+                <h3 class="font-black text-naomi-white text-base">Alur Booking</h3>
+            </div>
+            <button onclick="closeBookingFlowModal()" class="size-9 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center transition-all">
+                <span class="material-symbols-outlined text-white text-lg">close</span>
+            </button>
+        </div>
+
+        {{-- Steps --}}
+        <div class="p-6 space-y-4">
+            <div class="flex items-start gap-4">
+                <div class="size-8 bg-primary text-white rounded-xl flex items-center justify-center text-xs font-black shrink-0">1</div>
+                <div>
+                    <p class="font-black text-charcoal text-sm">Pilih Studio &amp; Tanggal</p>
+                    <p class="text-charcoal/50 text-xs mt-0.5">Pilih studio yang kamu inginkan, lalu klik tanggal yang tersedia di kalender.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="size-8 bg-primary text-white rounded-xl flex items-center justify-center text-xs font-black shrink-0">2</div>
+                <div>
+                    <p class="font-black text-charcoal text-sm">Pilih Slot Jam</p>
+                    <p class="text-charcoal/50 text-xs mt-0.5">Pilih jam mulai dan perpanjang durasi sesuai kebutuhan. Minimal 1 jam.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="size-8 bg-primary text-white rounded-xl flex items-center justify-center text-xs font-black shrink-0">3</div>
+                <div>
+                    <p class="font-black text-charcoal text-sm">Checkout &amp; Bayar DP</p>
+                    <p class="text-charcoal/50 text-xs mt-0.5">Tambahkan slot ke keranjang, lalu checkout dan lakukan pembayaran DP.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="size-8 bg-charcoal/20 text-charcoal rounded-xl flex items-center justify-center text-xs font-black shrink-0">4</div>
+                <div>
+                    <p class="font-black text-charcoal text-sm">Konfirmasi Admin</p>
+                    <p class="text-charcoal/50 text-xs mt-0.5">Admin akan memverifikasi pembayaran DP dan mengkonfirmasi booking kamu.</p>
+                </div>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="size-8 bg-charcoal/20 text-charcoal rounded-xl flex items-center justify-center text-xs font-black shrink-0">5</div>
+                <div>
+                    <p class="font-black text-charcoal text-sm">Pelunasan Sebelum Sesi</p>
+                    <p class="text-charcoal/50 text-xs mt-0.5">Lunasi sisa pembayaran sebelum sesi dimulai agar booking tetap aktif.</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- Footer --}}
+        <div class="px-6 pb-6">
+            <button onclick="closeBookingFlowModal()"
+                    class="w-full py-3.5 bg-charcoal text-naomi-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-primary transition-all">Mengerti</button>
         </div>
     </div>
 </div>
@@ -538,6 +604,25 @@ function showError(msg) {
     document.getElementById('errorMessage').textContent = msg;
     document.getElementById('errorModal').classList.remove('hidden');
     document.getElementById('errorModal').classList.add('flex');
+}
+
+// ── BOOKING FLOW MODAL ────────────────────────────────────────
+function openBookingFlowModal() {
+    const modal = document.getElementById('bookingFlowModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function closeBookingFlowModal() {
+    const modal = document.getElementById('bookingFlowModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+
+function handleBookingFlowBackdrop(event) {
+    if (event.target === document.getElementById('bookingFlowModal')) {
+        closeBookingFlowModal();
+    }
 }
 
 // ── INIT ───────────────────────────────────────────────────────

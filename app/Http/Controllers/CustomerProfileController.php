@@ -34,7 +34,7 @@ class CustomerProfileController extends Controller
             ->latest()
             ->get();
         $completedBookings = $customer->bookings()
-            ->with(['studio', 'studio.primaryImage', 'payments'])
+            ->with(['studio', 'studio.primaryImage', 'payments', 'review'])
             ->whereIn('booking_status', ['completed', 'cancelled'])
             ->latest()
             ->get();

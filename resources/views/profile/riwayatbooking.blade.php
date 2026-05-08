@@ -154,44 +154,116 @@
                 <div id="content1" class="tab-content hidden space-y-8">
                     @forelse($completedBookings as $booking)
                     @php $displayStatus = $booking->getDisplayStatus(); @endphp
-                    <div class="group bg-naomi-white rounded-[2.5rem] overflow-hidden border border-charcoal/5 hover:shadow-2xl transition-all duration-500 flex flex-col md:flex-row">
-                        <div class="md:w-72 h-64 relative overflow-hidden shrink-0">
-                            @if($booking->studio->primaryImage)
-                                <img src="{{ asset('storage/' . $booking->studio->primaryImage->image_url) }}"
-                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $booking->studio->name }}">
+                    <div class="group bg-naomi-white rounded-[2.5rem] overflow-hidden border border-charcoal/5 hover:shadow-2xl transition-all duration-500 flex flex-col">
+                        <div class="flex flex-col md:flex-row">
+                            <div class="md:w-72 h-64 relative overflow-hidden shrink-0">
+                                @if($booking->studio->primaryImage)
+                                    <img src="{{ asset('storage/' . $booking->studio->primaryImage->image_url) }}"
+                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $booking->studio->name }}">
+                                @else
+                                    <div class="w-full h-full bg-naomi-surface flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-5xl text-naomi-muted">image</span>
+                                    </div>
+                                @endif
+                                <div class="absolute top-6 left-6">
+                                    <x-booking-status :status="$displayStatus" />
+                                </div>
+                            </div>
+                            <div class="flex-1 p-10 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-4">
+                                        <h3 class="serif-title text-3xl font-bold text-charcoal">Sewa {{ $booking->studio->name }}</h3>
+                                        <p class="text-[10px] font-black text-primary bg-primary/5 px-3 py-1 rounded-lg">{{ $booking->booking_code }}</p>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center gap-3 text-charcoal/60">
+                                            <span class="material-symbols-outlined text-lg">calendar_today</span>
+                                            <span class="text-sm font-medium">{{ $booking->date->format('l, d M Y') }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-3 text-charcoal/60">
+                                            <span class="material-symbols-outlined text-lg">schedule</span>
+                                            <span class="text-sm font-medium">{{ substr($booking->start_time, 0, 5) }} – {{ substr($booking->end_time, 0, 5) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-8 flex items-center justify-end">
+                                    <a href="{{ route('profil.booking-detail', $booking->id) }}"
+                                       class="px-6 py-3 bg-charcoal text-naomi-white text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-primary transition-all shadow-lg">
+                                        Lihat Detail
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- REVIEW SECTION --}}
+                        @if($booking->booking_status === 'completed')
+                        <div class="border-t border-naomi-bg px-10 py-8">
+                            @if(!$booking->review)
+                                {{-- Form Review --}}
+                                <div x-data="{ rating: 0, hovered: 0 }">
+                                    <h4 class="font-black text-charcoal text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">star</span>
+                                        Berikan Review
+                                    </h4>
+                                    @if(session('error') && session('error_booking_id') == $booking->id)
+                                        <p class="text-red-500 text-xs font-bold mb-3">{{ session('error') }}</p>
+                                    @endif
+                                    <form method="POST" action="{{ route('reviews.store') }}">
+                                        @csrf
+                                        <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+
+                                        {{-- Rating Bintang --}}
+                                        <div class="flex items-center gap-1 mb-4">
+                                            @for($i = 1; $i <= 5; $i++)
+                                            <label class="cursor-pointer">
+                                                <input type="radio" name="rating" value="{{ $i }}" class="sr-only"
+                                                       x-on:change="rating = {{ $i }}" required>
+                                                <span class="material-symbols-outlined text-3xl transition-colors"
+                                                      x-on:mouseenter="hovered = {{ $i }}"
+                                                      x-on:mouseleave="hovered = 0"
+                                                      :class="(hovered >= {{ $i }} || (hovered === 0 && rating >= {{ $i }})) ? 'text-yellow-400' : 'text-charcoal/20'">
+                                                    star
+                                                </span>
+                                            </label>
+                                            @endfor
+                                            <span class="text-xs text-charcoal/40 font-bold ml-2" x-text="rating > 0 ? rating + '/5' : 'Pilih rating'"></span>
+                                        </div>
+
+                                        {{-- Komentar --}}
+                                        <textarea name="comment" rows="3"
+                                                  placeholder="Ceritakan pengalaman Anda menggunakan studio ini... (opsional)"
+                                                  maxlength="1000"
+                                                  class="w-full border border-charcoal/10 rounded-2xl px-5 py-4 text-sm text-charcoal placeholder-charcoal/30 focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none mb-4"></textarea>
+
+                                        <button type="submit"
+                                                class="px-8 py-3 bg-primary text-naomi-white text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-charcoal transition-all shadow-lg shadow-primary/20">
+                                            Kirim Review
+                                        </button>
+                                    </form>
+                                </div>
                             @else
-                                <div class="w-full h-full bg-naomi-surface flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-5xl text-naomi-muted">image</span>
+                                {{-- Tampilkan Review yang Sudah Diberikan --}}
+                                <div>
+                                    <h4 class="font-black text-charcoal text-sm uppercase tracking-widest mb-3 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">rate_review</span>
+                                        Review Anda
+                                    </h4>
+                                    <div class="flex items-center gap-1 mb-3">
+                                        @for($i = 1; $i <= 5; $i++)
+                                        <span class="material-symbols-outlined text-xl {{ $i <= $booking->review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                                        @endfor
+                                        <span class="text-xs text-charcoal/50 font-bold ml-2">{{ $booking->review->rating }}/5</span>
+                                    </div>
+                                    @if($booking->review->comment)
+                                    <p class="text-charcoal/70 text-sm leading-relaxed italic">"{{ $booking->review->comment }}"</p>
+                                    @endif
+                                    <p class="text-[10px] text-charcoal/30 font-bold mt-2 uppercase tracking-widest">
+                                        Dikirim {{ $booking->review->created_at->format('d M Y') }}
+                                    </p>
                                 </div>
                             @endif
-                            <div class="absolute top-6 left-6">
-                                <x-booking-status :status="$displayStatus" />
-                            </div>
                         </div>
-                        <div class="flex-1 p-10 flex flex-col justify-between">
-                            <div>
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="serif-title text-3xl font-bold text-charcoal">Sewa {{ $booking->studio->name }}</h3>
-                                    <p class="text-[10px] font-black text-primary bg-primary/5 px-3 py-1 rounded-lg">{{ $booking->booking_code }}</p>
-                                </div>
-                                <div class="space-y-3">
-                                    <div class="flex items-center gap-3 text-charcoal/60">
-                                        <span class="material-symbols-outlined text-lg">calendar_today</span>
-                                        <span class="text-sm font-medium">{{ $booking->date->format('l, d M Y') }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-3 text-charcoal/60">
-                                        <span class="material-symbols-outlined text-lg">schedule</span>
-                                        <span class="text-sm font-medium">{{ substr($booking->start_time, 0, 5) }} – {{ substr($booking->end_time, 0, 5) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-8 flex items-center justify-end">
-                                <a href="{{ route('profil.booking-detail', $booking->id) }}"
-                                   class="px-6 py-3 bg-charcoal text-naomi-white text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-primary transition-all shadow-lg">
-                                    Lihat Detail
-                                </a>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                     @empty
                     <div class="bg-naomi-white rounded-[3rem] p-20 text-center border border-charcoal/5">

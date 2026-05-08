@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Booking;
 use App\Models\BookingCart;
 use App\Models\Studio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -135,6 +138,8 @@ class BookingController extends Controller
             return back()->with('cart_error', 'Keranjang kosong.');
         }
 
+        $admin = Admin::first();
+
         $bookings = [];
         foreach ($cartItems as $item) {
             $booking = Booking::create([
@@ -153,6 +158,24 @@ class BookingController extends Controller
                 'booking_status'  => 'pending',
             ]);
             $bookings[] = $booking->id;
+
+            // Buat notifikasi untuk admin
+            if ($admin) {
+                DB::table('notifications')->insert([
+                    'id'              => Str::uuid()->toString(),
+                    'type'            => 'new_booking',
+                    'notifiable_type' => 'App\Models\Admin',
+                    'notifiable_id'   => $admin->id,
+                    'data'            => json_encode([
+                        'booking_id'    => $booking->id,
+                        'booking_code'  => $booking->booking_code,
+                        'customer_name' => $customer->name ?? auth()->user()->name,
+                    ]),
+                    'read_at'         => null,
+                    'created_at'      => now(),
+                    'updated_at'      => now(),
+                ]);
+            }
         }
 
         // Hapus semua cart setelah checkout

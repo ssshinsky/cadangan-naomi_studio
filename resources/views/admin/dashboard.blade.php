@@ -115,15 +115,15 @@
             </div>
         </div>
 
-        {{-- DP Belum Lunas --}}
+        {{-- Pesanan yang Perlu Dikonfirmasi --}}
         <div class="bg-naomi-white p-8 rounded-2xl shadow-sm border border-naomi-muted/20">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="font-serif text-xl font-bold leading-tight text-charcoal">DP Belum Lunas</h3>
+                <h3 class="font-serif text-xl font-bold leading-tight text-charcoal">Pesanan yang Perlu Dikonfirmasi</h3>
                 <a href="{{ route('admin.bookings.index') }}" class="text-primary text-xs font-bold hover:underline">Lihat Semua</a>
             </div>
             <div class="space-y-6">
-                @forelse($pendingSettlements as $booking)
-                <div class="flex gap-4 group">
+                @forelse($needsAction as $booking)
+                <a href="{{ route('admin.bookings.show', $booking->id) }}" class="flex gap-4 group block">
                     <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-colors shrink-0">
                         <span class="material-symbols-outlined text-xl">account_balance_wallet</span>
                     </div>
@@ -132,11 +132,15 @@
                             <p class="text-sm font-bold text-charcoal truncate">{{ $booking->customer->name }}</p>
                             <span class="text-[9px] font-bold text-naomi-muted ml-2 shrink-0">{{ $booking->booking_code }}</span>
                         </div>
-                        <p class="text-[11px] text-charcoal/60">Sisa: <span class="font-bold text-red-500">Rp{{ number_format($booking->remaining_amount, 0, ',', '.') }}</span></p>
+                        @if($booking->booking_status === 'pending')
+                            <p class="text-[11px] text-charcoal/60">Status: <span class="font-bold text-yellow-600">Menunggu Konfirmasi</span></p>
+                        @else
+                            <p class="text-[11px] text-charcoal/60">Sisa: <span class="font-bold text-red-500">Rp{{ number_format($booking->remaining_amount, 0, ',', '.') }}</span></p>
+                        @endif
                     </div>
-                </div>
+                </a>
                 @empty
-                <p class="text-center text-charcoal/30 text-sm py-4">Semua tagihan lunas 🎉</p>
+                <p class="text-center text-charcoal/30 text-sm py-4">Tidak ada pesanan yang perlu dikonfirmasi</p>
                 @endforelse
             </div>
             <a href="{{ route('admin.bookings.index') }}"

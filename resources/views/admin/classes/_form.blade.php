@@ -64,6 +64,27 @@
                 </div>
 
                 <div>
+                    <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Pilih Mentor dari Database (Opsional)</label>
+                    <select name="mentor_id"
+                            class="w-full bg-naomi-bg/20 border border-naomi-muted/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                        <option value="">— Tidak ada mentor —</option>
+                        @foreach($mentors as $mentor)
+                            <option value="{{ $mentor->id }}"
+                                {{ old('mentor_id', $class->mentor_id ?? '') == $mentor->id ? 'selected' : '' }}>
+                                {{ $mentor->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @if(isset($class) && $class->mentor_id && !$class->mentor)
+                        <p class="text-amber-500 text-xs mt-1">
+                            <span class="material-symbols-outlined text-xs align-middle">warning</span>
+                            Mentor sebelumnya sudah dihapus dari database.
+                        </p>
+                    @endif
+                    @error('mentor_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
                     <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Judul Lagu / Backsound</label>
                     <input type="text" name="song_title" value="{{ old('song_title', $class->song_title ?? '') }}"
                            placeholder="Contoh: Flowers - Miley Cyrus"

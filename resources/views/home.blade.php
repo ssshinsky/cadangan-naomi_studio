@@ -154,6 +154,56 @@
             </div>
         </div>
     </section>
+    {{-- REVIEW SECTION --}}
+    @if($latestReviews->count() > 0)
+    <section class="py-24 bg-naomi-surface/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Testimonials</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-bold text-charcoal">Kata Mereka</h2>
+                <p class="text-naomi-muted max-w-xl mx-auto font-medium mt-4">Pengalaman nyata dari pelanggan setia Naomi Studio.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach($latestReviews as $review)
+                @php
+                    $firstName  = mb_substr($review->customer->name, 0, 1);
+                    $maskedName = $firstName . '***';
+                @endphp
+                <div class="bg-naomi-white rounded-[2rem] p-8 shadow-sm border border-charcoal/5 flex flex-col gap-4">
+                    {{-- Rating --}}
+                    <div class="flex items-center gap-1">
+                        @for($i = 1; $i <= 5; $i++)
+                        <span class="material-symbols-outlined text-lg {{ $i <= $review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                        @endfor
+                    </div>
+
+                    {{-- Komentar --}}
+                    @if($review->comment)
+                    <p class="text-charcoal/70 text-sm leading-relaxed italic flex-grow">"{{ $review->comment }}"</p>
+                    @else
+                    <p class="text-charcoal/30 text-sm italic flex-grow">—</p>
+                    @endif
+
+                    {{-- Customer & Studio --}}
+                    <div class="flex items-center justify-between pt-4 border-t border-naomi-bg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                <span class="text-primary font-black text-xs">{{ $firstName }}</span>
+                            </div>
+                            <div>
+                                <p class="font-black text-charcoal text-xs">{{ $maskedName }}</p>
+                                <p class="text-[10px] text-charcoal/40 font-bold">{{ $review->studio->name }}</p>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-charcoal/30 font-bold">{{ $review->created_at->format('d M Y') }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
 
 </main>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OpenClass extends Model
 {
@@ -21,6 +22,7 @@ class OpenClass extends Model
         'time_start',
         'time_end',
         'is_active',
+        'mentor_id',
     ];
 
     protected function casts(): array
@@ -33,5 +35,10 @@ class OpenClass extends Model
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'created_by');
+    }
+
+    public function mentor(): BelongsTo
+    {
+        return $this->belongsTo(Mentor::class);
     }
 }

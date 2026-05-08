@@ -18,7 +18,8 @@ class OpenClassController extends Controller
 
     public function create()
     {
-        return view('admin.classes.create');
+        $mentors = \App\Models\Mentor::orderBy('name')->get();
+        return view('admin.classes.create', compact('mentors'));
     }
 
     public function store(Request $request)
@@ -34,6 +35,7 @@ class OpenClassController extends Controller
             'time_start'      => ['required'],
             'time_end'        => ['required'],
             'thumbnail'       => ['nullable', 'image', 'max:2048'],
+            'mentor_id'       => ['nullable', 'exists:mentors,id'],
         ]);
 
         $admin = auth()->user()->admin;
@@ -50,6 +52,7 @@ class OpenClassController extends Controller
             'time_start'      => $request->time_start,
             'time_end'        => $request->time_end,
             'is_active'       => $request->boolean('is_active'),
+            'mentor_id'       => $request->mentor_id ?: null,
         ];
 
         if ($request->hasFile('thumbnail')) {
@@ -63,7 +66,8 @@ class OpenClassController extends Controller
 
     public function edit(OpenClass $class)
     {
-        return view('admin.classes.edit', compact('class'));
+        $mentors = \App\Models\Mentor::orderBy('name')->get();
+        return view('admin.classes.edit', compact('class', 'mentors'));
     }
 
     public function update(Request $request, OpenClass $class)
@@ -79,6 +83,7 @@ class OpenClassController extends Controller
             'time_start'      => ['required'],
             'time_end'        => ['required'],
             'thumbnail'       => ['nullable', 'image', 'max:2048'],
+            'mentor_id'       => ['nullable', 'exists:mentors,id'],
         ]);
 
         $data = [
@@ -93,6 +98,7 @@ class OpenClassController extends Controller
             'time_start'      => $request->time_start,
             'time_end'        => $request->time_end,
             'is_active'       => $request->boolean('is_active'),
+            'mentor_id'       => $request->mentor_id ?: null,
         ];
 
         if ($request->hasFile('thumbnail')) {

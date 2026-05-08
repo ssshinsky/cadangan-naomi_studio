@@ -18,6 +18,9 @@ class StudioController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('studios.show', compact('studio'));
+        $reviews   = $studio->reviews()->with('customer')->where('is_visible', true)->latest()->get();
+        $avgRating = $studio->reviews()->where('is_visible', true)->avg('rating');
+
+        return view('studios.show', compact('studio', 'reviews', 'avgRating'));
     }
 }

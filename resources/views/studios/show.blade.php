@@ -153,6 +153,66 @@
             </div>
         </div>
     </section>
+    {{-- REVIEW SECTION --}}
+    <section class="py-32 px-6 max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Reviews</span>
+            <h2 class="serif-title text-5xl font-bold text-charcoal tracking-tight">Ulasan Pelanggan</h2>
+        </div>
+
+        {{-- Rata-rata Rating --}}
+        @if($avgRating)
+        <div class="flex items-center justify-center gap-4 mb-16">
+            <div class="flex items-center gap-1">
+                @for($i = 1; $i <= 5; $i++)
+                <span class="material-symbols-outlined text-3xl {{ $i <= round($avgRating) ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                @endfor
+            </div>
+            <span class="text-4xl font-black text-charcoal">{{ number_format($avgRating, 1) }}</span>
+            <span class="text-charcoal/40 font-medium text-sm">dari {{ $reviews->count() }} ulasan</span>
+        </div>
+        @endif
+
+        {{-- Daftar Review --}}
+        @if($reviews->count() > 0)
+        <div class="space-y-8">
+            @foreach($reviews as $review)
+            @php
+                $firstName = mb_substr($review->customer->name, 0, 1);
+                $maskedName = $firstName . '***';
+            @endphp
+            <div class="bg-naomi-white p-8 rounded-[2rem] shadow-sm border border-charcoal/5">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                            <span class="text-primary font-black text-sm">{{ $firstName }}</span>
+                        </div>
+                        <div>
+                            <p class="font-black text-charcoal text-sm">{{ $maskedName }}</p>
+                            <p class="text-[10px] text-charcoal/40 font-bold uppercase tracking-widest mt-0.5">
+                                {{ $review->created_at->format('d M Y') }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        @for($i = 1; $i <= 5; $i++)
+                        <span class="material-symbols-outlined text-base {{ $i <= $review->rating ? 'text-yellow-400' : 'text-charcoal/20' }}">star</span>
+                        @endfor
+                    </div>
+                </div>
+                @if($review->comment)
+                <p class="text-charcoal/70 text-sm leading-relaxed italic">"{{ $review->comment }}"</p>
+                @endif
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="bg-naomi-white rounded-[2.5rem] p-16 text-center border border-charcoal/5">
+            <span class="material-symbols-outlined text-5xl text-charcoal/20 mb-4 block">rate_review</span>
+            <p class="text-charcoal/40 font-medium">Belum ada review untuk studio ini.</p>
+        </div>
+        @endif
+    </section>
 
 </main>
 

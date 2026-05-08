@@ -125,6 +125,71 @@
             </div>
         </div>
 
+        {{-- MENTOR PROFILE SECTION --}}
+        @if($class->mentor)
+        <div class="mt-20 bg-naomi-white border border-charcoal/5 rounded-[2.5rem] p-10 lg:p-14 shadow-sm">
+            <div class="flex items-center gap-2 text-primary mb-10">
+                <span class="material-symbols-outlined text-sm">verified</span>
+                <p class="font-black uppercase tracking-widest text-[10px]">Tentang Mentor</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-10 items-start">
+                {{-- Foto Mentor --}}
+                <div class="shrink-0">
+                    @if($class->mentor->photo)
+                        <img src="{{ asset('storage/' . $class->mentor->photo) }}"
+                             alt="{{ $class->mentor->name }}"
+                             class="w-32 h-32 rounded-[1.5rem] object-cover shadow-md border border-charcoal/5">
+                    @else
+                        <div class="w-32 h-32 rounded-[1.5rem] bg-primary/10 flex items-center justify-center border border-charcoal/5">
+                            <span class="material-symbols-outlined text-5xl text-primary">person</span>
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Info Mentor --}}
+                <div class="flex-1 space-y-6">
+                    <div>
+                        <h3 class="serif-title text-3xl font-bold text-charcoal tracking-tight">{{ $class->mentor->name }}</h3>
+                    </div>
+
+                    @if($class->mentor->bio)
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-2">Bio</p>
+                        <p class="text-charcoal/70 leading-relaxed font-light text-sm">{{ $class->mentor->bio }}</p>
+                    </div>
+                    @endif
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        @if($class->mentor->experience)
+                        <div class="bg-naomi-surface/50 rounded-2xl p-6 border border-charcoal/5">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-primary text-sm">workspace_premium</span>
+                                </div>
+                                <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black">Pengalaman</p>
+                            </div>
+                            <p class="text-charcoal/70 text-sm font-light leading-relaxed">{{ $class->mentor->experience }}</p>
+                        </div>
+                        @endif
+
+                        @if($class->mentor->expertise)
+                        <div class="bg-naomi-surface/50 rounded-2xl p-6 border border-charcoal/5">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-primary text-sm">star</span>
+                                </div>
+                                <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black">Keunggulan</p>
+                            </div>
+                            <p class="text-charcoal/70 text-sm font-light leading-relaxed">{{ $class->mentor->expertise }}</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <div class="mt-24 text-center">
             <div class="w-10 h-[1px] bg-charcoal/10 mx-auto mb-6"></div>
             <p class="text-charcoal/30 text-[10px] uppercase tracking-[0.2em] font-medium">© 2026 Naomi Studio Yogyakarta</p>

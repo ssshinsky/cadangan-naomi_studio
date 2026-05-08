@@ -35,6 +35,9 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::delete('/booking/cart/{id}', [App\Http\Controllers\BookingController::class, 'removeFromCart'])->name('booking.cart.remove');
     Route::post('/booking/checkout', [App\Http\Controllers\BookingController::class, 'checkout'])->name('booking.checkout');
 
+    // Reviews
+    Route::post('/reviews', [App\Http\Controllers\StudioReviewController::class, 'store'])->name('reviews.store');
+
     // Checkout / Pembayaran
     Route::get('/checkout', [App\Http\Controllers\PaymentController::class, 'checkout'])->name('checkout');
     Route::post('/checkout', [App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
@@ -90,10 +93,22 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/laporan', [App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/export-pdf', [App\Http\Controllers\Admin\LaporanController::class, 'exportPdf'])->name('laporan.export-pdf');
 
+    // Mentors
+    Route::get('/mentors', [App\Http\Controllers\Admin\MentorController::class, 'index'])->name('mentors.index');
+    Route::get('/mentors/create', [App\Http\Controllers\Admin\MentorController::class, 'create'])->name('mentors.create');
+    Route::post('/mentors', [App\Http\Controllers\Admin\MentorController::class, 'store'])->name('mentors.store');
+    Route::get('/mentors/{mentor}/edit', [App\Http\Controllers\Admin\MentorController::class, 'edit'])->name('mentors.edit');
+    Route::put('/mentors/{mentor}', [App\Http\Controllers\Admin\MentorController::class, 'update'])->name('mentors.update');
+    Route::delete('/mentors/{mentor}', [App\Http\Controllers\Admin\MentorController::class, 'destroy'])->name('mentors.destroy');
+
     // Customers
     Route::get('/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers.index');
     Route::post('/customers/{customer}/toggle-active', [App\Http\Controllers\Admin\CustomerController::class, 'toggleActive'])->name('customers.toggle-active');
     Route::post('/customers/{customer}/reset-password', [App\Http\Controllers\Admin\CustomerController::class, 'resetPassword'])->name('customers.reset-password');
+
+    // Notifications
+    Route::get('/notifications/{id}/read', [App\Http\Controllers\Admin\NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [App\Http\Controllers\Admin\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 });
 
 require __DIR__.'/auth.php';

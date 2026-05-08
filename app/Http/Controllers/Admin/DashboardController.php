@@ -28,13 +28,21 @@ class DashboardController extends Controller
         $activeBookings     = Booking::whereIn('booking_status', ['pending', 'confirmed'])->count();
         $newMembersThisWeek = Customer::where('created_at', '>=', Carbon::now()->startOfWeek())->count();
 
-        // DP belum lunas (confirmed tapi remaining > 0)
+        // Booking pending dengan payment pending (menunggu konfirmasi)
+        $pendingPayments = Booking::with('customer')
+            ->where('booking_status', 'pending')
+            ->whereHas('payments', fn($q) => $q->where('status', 'pending'))
+            ->latest()->take(5)->get();
+
+        // Booking confirmed dengan sisa tagihan (DP belum lunas)
         $pendingSettlements = Booking::with('customer')
             ->where('booking_status', 'confirmed')
             ->where('remaining_amount', '>', 0)
-            ->latest()
-            ->take(5)
-            ->get();
+            ->latest()->take(5)->get();
+
+        // Gabungkan dan ambil 5 terbaru
+        $needsAction = $pendingPayments->merge($pendingSettlements)
+            ->sortByDesc('updated_at')->take(5);
 
         // Jadwal hari ini
         $todayBookings = Booking::with(['customer', 'studio', 'payments'])
@@ -70,7 +78,7 @@ class DashboardController extends Controller
             'revenueThisMonth',
             'activeBookings',
             'newMembersThisWeek',
-            'pendingSettlements',
+            'needsAction',
             'todayBookings',
             'weeklyRevenue',
             'studioStats'

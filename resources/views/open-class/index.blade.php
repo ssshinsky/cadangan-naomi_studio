@@ -43,7 +43,7 @@
 
                     <div class="absolute top-5 left-5">
                         <span class="bg-naomi-white/90 backdrop-blur-md text-primary text-[10px] font-black px-4 py-1.5 rounded-full shadow-sm uppercase tracking-widest">
-                            {{ $class->instructor_name }}
+                            {{ $class->mentor ? $class->mentor->name : $class->instructor_name }}
                         </span>
                     </div>
                 </div>
