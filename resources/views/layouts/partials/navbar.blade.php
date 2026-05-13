@@ -8,11 +8,26 @@
         </div>
 
         <nav class="hidden lg:flex items-center gap-10">
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="{{ route('home') }}">Beranda</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="{{ route('studios.index') }}">Studio</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="{{ route('open-class.index') }}">Kelas</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="{{ route('about') }}">Tentang</a>
-            <a class="text-sm font-medium hover:text-primary transition-colors" href="{{ route('alur') }}">Alur</a>
+            <a class="text-sm font-medium transition-colors relative group {{ request()->routeIs('home') ? 'text-primary' : 'hover:text-primary' }}" href="{{ route('home') }}">
+                Beranda
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 {{ request()->routeIs('home') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
+            </a>
+            <a class="text-sm font-medium transition-colors relative group {{ request()->routeIs('studios.*') ? 'text-primary' : 'hover:text-primary' }}" href="{{ route('studios.index') }}">
+                Studio
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 {{ request()->routeIs('studios.*') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
+            </a>
+            <a class="text-sm font-medium transition-colors relative group {{ request()->routeIs('open-class.*') ? 'text-primary' : 'hover:text-primary' }}" href="{{ route('open-class.index') }}">
+                Kelas
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 {{ request()->routeIs('open-class.*') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
+            </a>
+            <a class="text-sm font-medium transition-colors relative group {{ request()->routeIs('about') ? 'text-primary' : 'hover:text-primary' }}" href="{{ route('about') }}">
+                Tentang
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 {{ request()->routeIs('about') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
+            </a>
+            <a class="text-sm font-medium transition-colors relative group {{ request()->routeIs('alur') ? 'text-primary' : 'hover:text-primary' }}" href="{{ route('alur') }}">
+                Alur
+                <span class="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 {{ request()->routeIs('alur') ? 'w-full' : 'w-0 group-hover:w-full' }}"></span>
+            </a>
         </nav>
 
         <div class="flex items-center gap-4">
@@ -50,11 +65,11 @@
     {{-- Mobile Menu --}}
     <div id="mobileMenu" class="hidden lg:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md">
         <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
-            <a class="px-4 py-3 text-sm font-medium text-charcoal hover:bg-primary/5 hover:text-primary rounded-xl transition-colors" href="{{ route('home') }}">Beranda</a>
-            <a class="px-4 py-3 text-sm font-medium text-charcoal hover:bg-primary/5 hover:text-primary rounded-xl transition-colors" href="{{ route('studios.index') }}">Studio</a>
-            <a class="px-4 py-3 text-sm font-medium text-charcoal hover:bg-primary/5 hover:text-primary rounded-xl transition-colors" href="{{ route('open-class.index') }}">Kelas</a>
-            <a class="px-4 py-3 text-sm font-medium text-charcoal hover:bg-primary/5 hover:text-primary rounded-xl transition-colors" href="{{ route('about') }}">Tentang</a>
-            <a class="px-4 py-3 text-sm font-medium text-charcoal hover:bg-primary/5 hover:text-primary rounded-xl transition-colors" href="{{ route('alur') }}">Alur</a>
+            <a class="px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('home') ? 'bg-primary/10 text-primary font-semibold' : 'text-charcoal hover:bg-primary/5 hover:text-primary' }}" href="{{ route('home') }}">Beranda</a>
+            <a class="px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('studios.*') ? 'bg-primary/10 text-primary font-semibold' : 'text-charcoal hover:bg-primary/5 hover:text-primary' }}" href="{{ route('studios.index') }}">Studio</a>
+            <a class="px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('open-class.*') ? 'bg-primary/10 text-primary font-semibold' : 'text-charcoal hover:bg-primary/5 hover:text-primary' }}" href="{{ route('open-class.index') }}">Kelas</a>
+            <a class="px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('about') ? 'bg-primary/10 text-primary font-semibold' : 'text-charcoal hover:bg-primary/5 hover:text-primary' }}" href="{{ route('about') }}">Tentang</a>
+            <a class="px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('alur') ? 'bg-primary/10 text-primary font-semibold' : 'text-charcoal hover:bg-primary/5 hover:text-primary' }}" href="{{ route('alur') }}">Alur</a>
             @guest
             <div class="pt-3 border-t border-gray-100 mt-2">
                 <a href="{{ route('login') }}"
