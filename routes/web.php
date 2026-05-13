@@ -103,6 +103,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Customers
     Route::get('/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customers/export-pdf', [App\Http\Controllers\Admin\CustomerController::class, 'exportPdf'])->name('customers.export-pdf');
     Route::post('/customers/{customer}/toggle-active', [App\Http\Controllers\Admin\CustomerController::class, 'toggleActive'])->name('customers.toggle-active');
     Route::post('/customers/{customer}/reset-password', [App\Http\Controllers\Admin\CustomerController::class, 'resetPassword'])->name('customers.reset-password');
 

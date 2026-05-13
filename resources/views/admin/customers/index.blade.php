@@ -10,13 +10,18 @@
             <p class="text-naomi-muted text-sm mt-1">Pantau status keaktifan dan riwayat pelanggan Naomi Studio.</p>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center gap-3">
             <form method="GET" action="{{ route('admin.customers.index') }}" class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-naomi-muted text-sm">search</span>
                 <input type="text" name="search" value="{{ request('search') }}"
                        placeholder="Cari nama / email..."
                        class="pl-10 pr-4 py-2.5 bg-white border border-charcoal/5 rounded-xl text-xs focus:ring-1 focus:ring-primary focus:border-primary w-64 transition-all">
             </form>
+            <a href="{{ route('admin.customers.export-pdf') }}"
+               class="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-semibold shadow-sm hover:bg-primary/90 transition-all">
+                <span class="material-symbols-outlined text-base">download</span>
+                Unduh Laporan
+            </a>
         </div>
     </div>
 
