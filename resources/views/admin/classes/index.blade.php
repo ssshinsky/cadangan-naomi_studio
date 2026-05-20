@@ -23,6 +23,7 @@
                     <tr class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.1em] border-b border-slate-50 bg-slate-50/30">
                         <th class="px-8 py-5">Nama Kelas & Mentor</th>
                         <th class="px-6 py-5">Jadwal</th>
+                        <th class="px-6 py-5">Tanggal</th>
                         <th class="px-6 py-5">Harga</th>
                         <th class="px-6 py-5">WhatsApp</th>
                         <th class="px-6 py-5 text-center">Status</th>
@@ -57,7 +58,11 @@
                             <p class="text-[10px] text-slate-400">{{ substr($class->time_start, 0, 5) }} – {{ substr($class->time_end, 0, 5) }}</p>
                         </td>
                         <td class="px-6 py-5 text-sm font-bold text-slate-800">
-                            Rp{{ number_format($class->price, 0, ',', '.') }}
+                            {{ $class->class_date ? $class->class_date->format('d M Y') : '-' }}
+                        </td>
+                        <td class="px-6 py-5 text-sm font-bold text-slate-800">
+                            <div>EB: {{ $class->early_bird_price ? 'Rp' . number_format($class->early_bird_price, 0, ',', '.') : '-' }}</div>
+                            <div class="text-primary">D-Day: Rp{{ number_format($class->price, 0, ',', '.') }}</div>
                         </td>
                         <td class="px-6 py-5">
                             <a href="{{ $class->whatsapp_link }}" target="_blank"
@@ -106,7 +111,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="px-8 py-16 text-center text-slate-400">
+                        <td colspan="7" class="px-8 py-16 text-center text-slate-400">
                             <span class="material-symbols-outlined text-5xl block mb-3">event_seat</span>
                             Belum ada kelas. Tambahkan kelas pertama!
                         </td>

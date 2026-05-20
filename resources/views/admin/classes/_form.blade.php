@@ -80,6 +80,21 @@
                 </div>
 
                 <div>
+                    <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Harga Early Bird (Rp)</label>
+                    <input type="number" name="early_bird_price" value="{{ old('early_bird_price', $class->early_bird_price ?? '') }}"
+                           placeholder="120000" min="0"
+                           class="w-full bg-naomi-bg/20 border border-naomi-muted/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    @error('early_bird_price') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Tanggal Kelas</label>
+                    <input type="date" name="class_date" value="{{ old('class_date', isset($class) && $class->class_date ? $class->class_date->format('Y-m-d') : '') }}"
+                           class="w-full bg-naomi-bg/20 border border-naomi-muted/20 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                    @error('class_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
                     <label class="block text-xs font-bold text-naomi-muted uppercase tracking-widest mb-2">Harga (Rp)</label>
                     <input type="number" name="price" value="{{ old('price', $class->price ?? '') }}"
                            placeholder="150000" min="0"

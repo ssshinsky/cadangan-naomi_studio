@@ -53,6 +53,9 @@
                         <span class="material-symbols-outlined text-sm">schedule</span>
                         {{ $class->day_of_week }} • {{ substr($class->time_start, 0, 5) }} WIB
                     </div>
+                    <div class="text-[10px] text-slate-500 mb-2 uppercase tracking-[0.2em] font-black">
+                        {{ $class->class_date ? $class->class_date->format('d M Y') : 'Tanggal belum ditetapkan' }}
+                    </div>
 
                     <h3 class="serif-title text-2xl font-bold text-charcoal mb-2 group-hover:text-primary transition-colors tracking-tight">
                         {{ $class->title }}
@@ -67,8 +70,15 @@
                         {{ $class->description }}
                     </p>
 
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-primary font-black text-lg">Rp{{ number_format($class->price, 0, ',', '.') }}</span>
+                    <div class="flex items-center justify-between gap-4 mb-4">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-1">Early Bird</p>
+                            <p class="text-sm text-slate-600">{{ $class->early_bird_price ? 'Rp' . number_format($class->early_bird_price, 0, ',', '.') : '-' }}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-1">D-Day</p>
+                            <p class="text-primary font-black text-lg">Rp{{ number_format($class->price, 0, ',', '.') }}</p>
+                        </div>
                     </div>
 
                     <div class="pt-4 border-t border-charcoal/5">

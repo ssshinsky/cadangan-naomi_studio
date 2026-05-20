@@ -25,16 +25,18 @@ class OpenClassController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'           => ['required', 'string', 'max:255'],
-            'mentor_id'       => ['required', 'exists:mentors,id'],
-            'description'     => ['nullable', 'string'],
-            'price'           => ['required', 'integer', 'min:0'],
-            'song_title'      => ['nullable', 'string', 'max:255'],
-            'whatsapp_link'   => ['required', 'string'],
-            'day_of_week'     => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
-            'time_start'      => ['required'],
-            'time_end'        => ['required'],
-            'thumbnail'       => ['nullable', 'image', 'max:2048'],
+            'title'            => ['required', 'string', 'max:255'],
+            'mentor_id'        => ['required', 'exists:mentors,id'],
+            'description'      => ['nullable', 'string'],
+            'price'            => ['required', 'integer', 'min:0'],
+            'early_bird_price' => ['nullable', 'integer', 'min:0'],
+            'class_date'       => ['required', 'date'],
+            'song_title'       => ['nullable', 'string', 'max:255'],
+            'whatsapp_link'    => ['required', 'string'],
+            'day_of_week'      => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
+            'time_start'       => ['required'],
+            'time_end'         => ['required'],
+            'thumbnail'        => ['nullable', 'image', 'max:2048'],
         ]);
 
         $admin = auth()->user()->admin;
@@ -47,6 +49,8 @@ class OpenClassController extends Controller
             'instructor_name' => $mentor->name,
             'description'     => $request->description,
             'price'           => $request->price,
+            'early_bird_price' => $request->early_bird_price ?? 0,
+            'class_date'      => $request->class_date,
             'song_title'      => $request->song_title,
             'whatsapp_link'   => 'https://wa.me/' . ltrim($request->whatsapp_link, '/'),
             'day_of_week'     => $request->day_of_week,
@@ -74,16 +78,18 @@ class OpenClassController extends Controller
     public function update(Request $request, OpenClass $class)
     {
         $request->validate([
-            'title'           => ['required', 'string', 'max:255'],
-            'mentor_id'       => ['required', 'exists:mentors,id'],
-            'description'     => ['nullable', 'string'],
-            'price'           => ['required', 'integer', 'min:0'],
-            'song_title'      => ['nullable', 'string', 'max:255'],
-            'whatsapp_link'   => ['required', 'string'],
-            'day_of_week'     => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
-            'time_start'      => ['required'],
-            'time_end'        => ['required'],
-            'thumbnail'       => ['nullable', 'image', 'max:2048'],
+            'title'            => ['required', 'string', 'max:255'],
+            'mentor_id'        => ['required', 'exists:mentors,id'],
+            'description'      => ['nullable', 'string'],
+            'price'            => ['required', 'integer', 'min:0'],
+            'early_bird_price' => ['nullable', 'integer', 'min:0'],
+            'class_date'       => ['required', 'date'],
+            'song_title'       => ['nullable', 'string', 'max:255'],
+            'whatsapp_link'    => ['required', 'string'],
+            'day_of_week'      => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
+            'time_start'       => ['required'],
+            'time_end'         => ['required'],
+            'thumbnail'        => ['nullable', 'image', 'max:2048'],
         ]);
 
         $mentor = \App\Models\Mentor::find($request->mentor_id);
@@ -94,6 +100,8 @@ class OpenClassController extends Controller
             'instructor_name' => $mentor->name,
             'description'     => $request->description,
             'price'           => $request->price,
+            'early_bird_price' => $request->early_bird_price ?? 0,
+            'class_date'      => $request->class_date,
             'song_title'      => $request->song_title,
             'whatsapp_link'   => 'https://wa.me/' . ltrim($request->whatsapp_link, '/'),
             'day_of_week'     => $request->day_of_week,

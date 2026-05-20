@@ -43,6 +43,7 @@
                         <div>
                             <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-1">Jadwal</p>
                             <p class="text-xl font-bold text-charcoal">{{ $class->day_of_week }}, {{ substr($class->time_start, 0, 5) }} – {{ substr($class->time_end, 0, 5) }} WIB</p>
+                            <p class="text-sm text-slate-500 mt-2">{{ $class->class_date ? $class->class_date->format('d M Y') : 'Tanggal segera ditentukan' }}</p>
                         </div>
                     </div>
 
@@ -76,8 +77,17 @@
                             <span class="material-symbols-outlined text-primary">payments</span>
                         </div>
                         <div>
-                            <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-1">Harga Sesi</p>
-                            <p class="text-4xl font-black text-primary">Rp{{ number_format($class->price, 0, ',', '.') }}</p>
+                            <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-1">Harga Kelas</p>
+                            <div class="flex items-center gap-6">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-1">Early Bird</p>
+                                    <p class="text-2xl font-black text-charcoal">{{ $class->early_bird_price ? 'Rp' . number_format($class->early_bird_price, 0, ',', '.') : '-' }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-1">D-Day</p>
+                                    <p class="text-3xl font-black text-primary">Rp{{ number_format($class->price, 0, ',', '.') }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

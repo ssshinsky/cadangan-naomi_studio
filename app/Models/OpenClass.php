@@ -15,6 +15,8 @@ class OpenClass extends Model
         'instructor_photo',
         'description',
         'price',
+        'early_bird_price',
+        'class_date',
         'thumbnail',
         'song_title',
         'whatsapp_link',
@@ -29,6 +31,7 @@ class OpenClass extends Model
     {
         return [
             'is_active' => 'boolean',
+            'class_date' => 'date',
         ];
     }
 
