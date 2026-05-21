@@ -71,6 +71,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/studios/{id}/edit', [App\Http\Controllers\Admin\StudioController::class, 'edit'])->name('studios.edit');
     Route::put('/studios/{id}', [App\Http\Controllers\Admin\StudioController::class, 'update'])->name('studios.update');
     Route::delete('/studios/{id}', [App\Http\Controllers\Admin\StudioController::class, 'destroy'])->name('studios.destroy');
+    Route::post('/studios/{id}/toggle-active', [App\Http\Controllers\Admin\StudioController::class, 'toggleActive'])->name('studios.toggle-active');
 
     // Kelas
     Route::get('/kelas', [App\Http\Controllers\Admin\OpenClassController::class, 'index'])->name('classes.index');
@@ -100,6 +101,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/mentors/{mentor}/edit', [App\Http\Controllers\Admin\MentorController::class, 'edit'])->name('mentors.edit');
     Route::put('/mentors/{mentor}', [App\Http\Controllers\Admin\MentorController::class, 'update'])->name('mentors.update');
     Route::delete('/mentors/{mentor}', [App\Http\Controllers\Admin\MentorController::class, 'destroy'])->name('mentors.destroy');
+    Route::post('/mentors/{mentor}/toggle-active', [App\Http\Controllers\Admin\MentorController::class, 'toggleActive'])->name('mentors.toggle-active');
 
     // Customers
     Route::get('/customers', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers.index');

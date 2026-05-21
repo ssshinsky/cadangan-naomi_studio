@@ -21,6 +21,7 @@ class Studio extends Model
         'size_sqm',
         'floor_type',
         'is_available',
+        'is_active',
     ];
 
     // Hitung harga per jam berdasarkan jumlah peserta
@@ -36,6 +37,7 @@ class Studio extends Model
     {
         return [
             'is_available' => 'boolean',
+            'is_active' => 'boolean',
         ];
     }
 

@@ -125,12 +125,10 @@ class OpenClassController extends Controller
 
     public function destroy(OpenClass $class)
     {
-        if ($class->thumbnail) {
-            Storage::disk('public')->delete($class->thumbnail);
-        }
-        $class->delete();
+        // Do not delete open class; set as inactive instead
+        $class->update(['is_active' => false]);
 
-        return redirect()->route('admin.classes.index')->with('success', 'Kelas berhasil dihapus.');
+        return redirect()->route('admin.classes.index')->with('success', 'Kelas berhasil dinonaktifkan.');
     }
 
     public function toggleActive(OpenClass $class)

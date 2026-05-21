@@ -14,7 +14,7 @@ class BookingController extends Controller
 {
     public function index(Request $request)
     {
-        $studios  = Studio::where('is_available', true)->get();
+        $studios  = Studio::where('is_available', true)->where('is_active', true)->get();
         $customer = auth()->user()->customer;
 
         $month = $request->get('month', now()->month);
@@ -69,6 +69,11 @@ class BookingController extends Controller
 
         $studio   = Studio::findOrFail($request->studio_id);
         $customer = auth()->user()->customer;
+
+        // Cek apakah studio aktif
+        if (!$studio->is_active) {
+            return back()->with('cart_error', 'Studio ini tidak tersedia untuk pemesanan.');
+        }
 
         // Validasi kapasitas — kembalikan ke cart_error supaya muncul di UI
         if ($request->participant_count > $studio->capacity) {

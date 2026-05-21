@@ -13,10 +13,18 @@ class Mentor extends Model
         'bio',
         'experience',
         'expertise',
+        'is_active',
     ];
 
     public function openClasses(): HasMany
     {
         return $this->hasMany(OpenClass::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
     }
 }

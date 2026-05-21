@@ -8,7 +8,7 @@ class StudioController extends Controller
 {
     public function index()
     {
-        $studios = Studio::with(['facilities', 'images'])->where('is_available', true)->get();
+        $studios = Studio::with(['facilities', 'images'])->where('is_available', true)->where('is_active', true)->get();
         return view('studios.index', compact('studios'));
     }
 
@@ -16,6 +16,7 @@ class StudioController extends Controller
     {
         $studio = Studio::with(['facilities', 'images'])
             ->where('slug', $slug)
+            ->where('is_active', true)
             ->firstOrFail();
 
         $reviews   = $studio->reviews()->with('customer')->where('is_visible', true)->latest()->get();

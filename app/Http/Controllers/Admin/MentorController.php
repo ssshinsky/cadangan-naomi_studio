@@ -82,11 +82,16 @@ class MentorController extends Controller
 
     public function destroy(Mentor $mentor)
     {
-        if ($mentor->photo) {
-            Storage::disk('public')->delete($mentor->photo);
-        }
-        $mentor->delete();
+        // Do not delete mentor record; mark as inactive instead
+        $mentor->update(['is_active' => false]);
 
-        return redirect()->route('admin.mentors.index')->with('success', 'Mentor berhasil dihapus.');
+        return redirect()->route('admin.mentors.index')->with('success', 'Mentor berhasil dinonaktifkan.');
+    }
+
+    public function toggleActive(Mentor $mentor)
+    {
+        $mentor->update(['is_active' => !$mentor->is_active]);
+        $status = $mentor->is_active ? 'diaktifkan' : 'dinonaktifkan';
+        return back()->with('success', "Mentor \"{$mentor->name}\" berhasil {$status}.");
     }
 }

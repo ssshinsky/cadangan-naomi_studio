@@ -192,14 +192,17 @@ class StudioController extends Controller
     public function destroy($id)
     {
         $studio = Studio::findOrFail($id);
+        // Do not delete studio; mark as inactive instead
+        $studio->update(['is_active' => false]);
 
-        // Hapus semua foto
-        foreach ($studio->images as $image) {
-            Storage::disk('public')->delete($image->image_url);
-        }
+        return redirect()->route('admin.studios.index')->with('success', 'Studio berhasil dinonaktifkan.');
+    }
 
-        $studio->delete();
-
-        return redirect()->route('admin.studios.index')->with('success', 'Studio berhasil dihapus.');
+    public function toggleActive($id)
+    {
+        $studio = Studio::findOrFail($id);
+        $studio->update(['is_active' => !$studio->is_active]);
+        $status = $studio->is_active ? 'diaktifkan' : 'dinonaktifkan';
+        return back()->with('success', "Studio \"{$studio->name}\" berhasil {$status}.");
     }
 }

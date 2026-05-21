@@ -72,37 +72,31 @@
                     @endif
                 </div>
 
-                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3">
                     <a href="{{ route('admin.studios.edit', $studio->id) }}"
                        class="flex-1 flex items-center justify-center gap-2 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-50 transition-all">
                         <span class="material-symbols-outlined text-primary text-lg">edit</span>
                         Edit Data
                     </a>
-                    <button onclick="document.getElementById('deleteModal{{ $studio->id }}').classList.remove('hidden')"
-                            class="px-5 py-3 bg-slate-100 text-slate-500 rounded-xl font-bold text-sm hover:bg-red-50 hover:text-red-500 transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-lg">delete</span>
-                        Hapus
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        {{-- Modal Hapus --}}
-        <div id="deleteModal{{ $studio->id }}" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-            <div class="bg-white rounded-3xl p-10 max-w-sm w-full mx-4 shadow-2xl text-center">
-                <span class="material-symbols-outlined text-5xl text-red-500 mb-4 block">delete</span>
-                <h3 class="text-xl font-bold mb-2">Hapus Studio?</h3>
-                <p class="text-slate-500 text-sm mb-6">Studio <strong>{{ $studio->name }}</strong> akan dihapus permanen beserta semua fotonya.</p>
-                <div class="flex gap-3">
-                    <button onclick="document.getElementById('deleteModal{{ $studio->id }}').classList.add('hidden')"
-                            class="flex-1 py-3 border border-slate-200 rounded-xl text-sm font-medium">Batal</button>
-                    <form method="POST" action="{{ route('admin.studios.destroy', $studio->id) }}" class="flex-1">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="w-full py-3 bg-red-500 text-white rounded-xl text-sm font-bold">Ya, Hapus</button>
+                    <form method="POST" action="{{ route('admin.studios.toggle-active', $studio->id) }}" id="toggleStudio{{ $studio->id }}">
+                        @csrf
+                        <button type="button"
+                            onclick="naomiConfirm(
+                                '{{ $studio->is_active ? 'Nonaktifkan' : 'Aktifkan' }} studio <strong>{{ $studio->name }}</strong>?',
+                                () => document.getElementById('toggleStudio{{ $studio->id }}').submit(),
+                                { danger: {{ $studio->is_active ? 'true' : 'false' }}, confirmText: '{{ $studio->is_active ? 'Nonaktifkan' : 'Aktifkan' }}' }
+                            )"
+                            class="px-5 py-3 rounded-xl font-bold text-sm transition-all
+                                {{ $studio->is_active ? 'bg-green-50 text-green-600 border border-green-100 hover:bg-red-50 hover:text-red-500' : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-green-50 hover:text-green-600' }}">
+                            <span class="material-symbols-outlined text-lg">{{ $studio->is_active ? 'check' : 'block' }}</span>
+                            {{ $studio->is_active ? 'Aktif' : 'Nonaktif' }}
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
+
+        {{-- Delete removed; use toggle aktif/nonaktif above --}}
         @empty
         <div class="text-center py-20 text-slate-400">
             <span class="material-symbols-outlined text-5xl block mb-3">image</span>

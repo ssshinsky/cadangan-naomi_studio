@@ -26,7 +26,6 @@
                         <th class="px-6 py-5">Tanggal</th>
                         <th class="px-6 py-5">Harga</th>
                         <th class="px-6 py-5">WhatsApp</th>
-                        <th class="px-6 py-5 text-center">Status</th>
                         <th class="px-6 py-5 text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -72,38 +71,26 @@
                             </a>
                         </td>
                         <td class="px-6 py-5 text-center">
-                            <form method="POST" action="{{ route('admin.classes.toggle-active', $class) }}" id="toggleClass{{ $class->id }}">
-                                @csrf
-                                <button type="button"
-                                    onclick="naomiConfirm(
-                                        '{{ $class->is_active ? 'Nonaktifkan' : 'Aktifkan' }} kelas <strong>{{ $class->title }}</strong>?',
-                                        () => document.getElementById('toggleClass{{ $class->id }}').submit(),
-                                        { danger: {{ $class->is_active ? 'true' : 'false' }}, confirmText: '{{ $class->is_active ? 'Nonaktifkan' : 'Aktifkan' }}' }
-                                    )"
-                                    class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all
-                                        {{ $class->is_active
-                                            ? 'bg-green-50 text-green-600 border border-green-100 hover:bg-red-50 hover:text-red-500 hover:border-red-100'
-                                            : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-green-50 hover:text-green-600 hover:border-green-100' }}">
-                                    {{ $class->is_active ? 'Aktif' : 'Nonaktif' }}
-                                </button>
-                            </form>
-                        </td>
-                        <td class="px-6 py-5 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <a href="{{ route('admin.classes.edit', $class) }}"
-                                   class="size-9 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-primary hover:text-white transition-all">
+                                   class="size-9 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-primary hover:text-white transition-all"
+                                   title="Edit">
                                     <span class="material-symbols-outlined text-base">edit</span>
                                 </a>
-                                <form method="POST" action="{{ route('admin.classes.destroy', $class) }}" id="deleteClass{{ $class->id }}">
-                                    @csrf @method('DELETE')
+                                <form method="POST" action="{{ route('admin.classes.toggle-active', $class) }}" id="toggleClass{{ $class->id }}" style="display: inline;">
+                                    @csrf
                                     <button type="button"
                                         onclick="naomiConfirm(
-                                            'Hapus kelas <strong>{{ $class->title }}</strong>? Tindakan ini tidak bisa dibatalkan.',
-                                            () => document.getElementById('deleteClass{{ $class->id }}').submit(),
-                                            { danger: true, confirmText: 'Ya, Hapus' }
+                                            '{{ $class->is_active ? 'Nonaktifkan' : 'Aktifkan' }} kelas <strong>{{ $class->title }}</strong>?',
+                                            () => document.getElementById('toggleClass{{ $class->id }}').submit(),
+                                            { danger: {{ $class->is_active ? 'true' : 'false' }}, confirmText: '{{ $class->is_active ? 'Nonaktifkan' : 'Aktifkan' }}' }
                                         )"
-                                        class="size-9 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-red-500 hover:text-white transition-all">
-                                        <span class="material-symbols-outlined text-base">delete</span>
+                                        class="size-9 flex items-center justify-center rounded-xl transition-all
+                                            {{ $class->is_active
+                                                ? 'bg-green-50 text-green-600 border border-green-100 hover:bg-red-50 hover:text-red-500'
+                                                : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-green-50 hover:text-green-600' }}"
+                                        title="{{ $class->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                        <span class="material-symbols-outlined text-base">{{ $class->is_active ? 'check' : 'block' }}</span>
                                     </button>
                                 </form>
                             </div>
@@ -111,7 +98,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="px-8 py-16 text-center text-slate-400">
+                        <td colspan="6" class="px-8 py-16 text-center text-slate-400">
                             <span class="material-symbols-outlined text-5xl block mb-3">event_seat</span>
                             Belum ada kelas. Tambahkan kelas pertama!
                         </td>
