@@ -4,7 +4,7 @@
 
 @section('content')
 <main class="bg-naomi-bg min-h-screen pb-20">
-    <div class="max-w-7xl mx-auto px-6 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div class="flex flex-col lg:flex-row gap-10">
 
             {{-- SIDEBAR --}}
@@ -51,11 +51,11 @@
 
             {{-- MAIN CONTENT --}}
             <div class="flex-1">
-                <div class="bg-naomi-white rounded-[3rem] p-10 shadow-sm border border-charcoal/10">
+                <div class="bg-naomi-white rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-sm border border-charcoal/10">
 
-                    <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-6 mb-12">
+                    <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-10 sm:mb-12">
                         <div>
-                            <h1 class="serif-title text-4xl md:text-5xl font-bold text-charcoal tracking-tighter">Edit Profil</h1>
+                            <h1 class="serif-title text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal tracking-tighter">Edit Profil</h1>
                             <p class="text-charcoal/50 mt-2 font-medium">Kelola informasi profil dan detail kontak Anda</p>
                         </div>
                         <a href="{{ route('profil') }}"
@@ -77,7 +77,7 @@
                         @csrf
                         @method('PATCH')
 
-                        <div class="flex flex-col md:flex-row items-center gap-8 mb-16 p-8 bg-naomi-bg rounded-[2.5rem] border-2 border-dashed border-charcoal/5">
+                        <div class="flex flex-col sm:flex-row items-center gap-6 mb-12 sm:mb-16 p-6 sm:p-8 bg-naomi-bg rounded-[2rem] sm:rounded-[2.5rem] border-2 border-dashed border-charcoal/5">
                             <div class="relative group">
                                 <div class="w-32 h-32 rounded-[2rem] overflow-hidden border-4 border-naomi-white shadow-xl rotate-3 transition-transform group-hover:rotate-0">
                                     @if($customer->avatar)
@@ -88,7 +88,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="flex-1 text-center md:text-left">
+                        <div class="flex-1 text-center sm:text-left">
                                 <p class="font-black text-charcoal uppercase text-[10px] tracking-widest mb-2">Foto Profil</p>
                                 <p class="text-xs text-charcoal/50 mb-6 font-medium">Unggah file JPG, PNG (Maksimal 2MB).</p>
                                 <button type="button" onclick="document.getElementById('foto').click()"
@@ -147,13 +147,13 @@
                             @error('address') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
 
-                        <div class="flex justify-end gap-4 pt-8 border-t border-naomi-bg mt-10">
+                        <div class="flex flex-col sm:flex-row justify-end gap-3 pt-8 border-t border-naomi-bg mt-10">
                             <a href="{{ route('profil') }}"
-                               class="px-10 py-5 border-2 border-charcoal/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-charcoal/40 hover:bg-naomi-bg transition-all">
+                               class="w-full sm:w-auto text-center px-8 sm:px-10 py-4 sm:py-5 border-2 border-charcoal/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-charcoal/40 hover:bg-naomi-bg transition-all">
                                 Batal
                             </a>
                             <button type="submit"
-                                    class="px-12 py-5 bg-primary text-naomi-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:bg-charcoal transition-all duration-500">
+                                    class="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 bg-primary text-naomi-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:bg-charcoal transition-all duration-500">
                                 Simpan Perubahan
                             </button>
                         </div>

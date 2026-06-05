@@ -3,7 +3,7 @@
 @section('title', 'Detail Pemesanan - Naomi Studio')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-6 py-20">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
     <div class="flex flex-col lg:flex-row gap-10">
 
         {{-- SIDEBAR --}}
@@ -49,13 +49,13 @@
 
         {{-- MAIN CONTENT --}}
         <div class="flex-1">
-            <div class="flex justify-between items-start mb-10">
+            <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 sm:mb-10">
                 <div>
-                    <h1 class="serif-title text-4xl font-bold text-charcoal">Detail Pemesanan</h1>
+                    <h1 class="serif-title text-3xl sm:text-4xl font-bold text-charcoal">Detail Pemesanan</h1>
                     <p class="text-charcoal/50 mt-1">Laporan lengkap transaksi Anda pada Naomi Studio</p>
                 </div>
                 <a href="{{ route('profil.riwayat-booking') }}"
-                   class="text-primary hover:underline text-sm font-medium flex items-center gap-1">
+                   class="text-primary hover:underline text-sm font-medium flex items-center gap-1 shrink-0">
                     ← Kembali
                 </a>
             </div>
@@ -63,7 +63,7 @@
             <div class="bg-naomi-white rounded-[3rem] shadow-sm border border-charcoal/5 overflow-hidden">
 
                 {{-- Summary --}}
-                <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                     <div class="space-y-6">
                         <div>
                             <span class="text-[10px] uppercase tracking-widest text-charcoal/40 font-black">ID Transaksi</span>
@@ -96,7 +96,7 @@
                         <div>
                             <span class="text-[10px] uppercase tracking-widest text-charcoal/40 font-black">Metode Pembayaran</span>
                             <div class="flex items-center gap-3 mt-3">
-                                <div class="px-4 py-2 bg-naomi-bg rounded-lg text-sm font-bold text-charcoal uppercase">
+                                <div class="px-4 py-2 bg-naomi-bg rounded-lg text-sm font-bold text-charcoal uppercase break-all">
                                     {{ str_replace('transfer_', '', $booking->payments->last()->payment_method) }}
                                 </div>
                             </div>
@@ -135,13 +135,13 @@
                 </div>
 
                 {{-- Rincian Biaya --}}
-                <div class="px-8 pb-8">
-                    <div class="bg-naomi-bg rounded-2xl p-6">
-                        <h3 class="serif-title text-2xl font-bold mb-5 border-b border-charcoal/5 pb-3 text-charcoal">Rincian Biaya</h3>
+                <div class="px-6 sm:px-8 pb-6 sm:pb-8">
+                    <div class="bg-naomi-bg rounded-2xl p-5 sm:p-6">
+                        <h3 class="serif-title text-xl sm:text-2xl font-bold mb-5 border-b border-charcoal/5 pb-3 text-charcoal">Rincian Biaya</h3>
                         <div class="space-y-4">
-                            <div class="flex justify-between text-charcoal/70">
-                                <span>Sewa {{ $booking->studio->name }} ({{ $booking->duration_hours }} Jam × Rp{{ number_format($booking->studio->price_per_hour, 0, ',', '.') }})</span>
-                                <span class="font-medium">Rp{{ number_format($booking->total_price, 0, ',', '.') }}</span>
+                            <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 text-charcoal/70">
+                                <span class="text-sm">Sewa {{ $booking->studio->name }} ({{ $booking->duration_hours }} Jam × Rp{{ number_format($booking->studio->price_per_hour, 0, ',', '.') }})</span>
+                                <span class="font-medium sm:ml-4 shrink-0">Rp{{ number_format($booking->total_price, 0, ',', '.') }}</span>
                             </div>
                             @if($booking->dp_amount > 0)
                             <div class="flex justify-between text-charcoal/70">
@@ -159,7 +159,7 @@
 
                 {{-- REVIEW SECTION --}}
                 @if($booking->booking_status === 'completed')
-                <div class="px-8 pb-8">
+                <div class="px-6 sm:px-8 pb-6 sm:pb-8">
                     <div class="bg-naomi-white rounded-3xl border border-charcoal/5 p-8 mb-8">
                         <h3 class="serif-title text-2xl font-bold mb-4 text-charcoal">Review Booking</h3>
 
@@ -239,7 +239,7 @@
                 @endif
 
                 {{-- Info --}}
-                <div class="px-8 pb-10">
+                <div class="px-6 sm:px-8 pb-8 sm:pb-10">
                     <h3 class="serif-title text-2xl font-bold mb-5 flex items-center gap-2 text-charcoal">
                         <span class="material-symbols-outlined text-primary">info</span>
                         Apa langkah selanjutnya?
@@ -261,7 +261,7 @@
                 </div>
 
                 {{-- Actions --}}
-                <div class="px-8 py-8 bg-naomi-bg/50 border-t border-charcoal/5 flex flex-col sm:flex-row items-center gap-4">
+                <div class="px-6 sm:px-8 py-6 sm:py-8 bg-naomi-bg/50 border-t border-charcoal/5 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                     @php $displayStatus = $booking->getDisplayStatus(); @endphp
 
                     @if($displayStatus === 'pending')

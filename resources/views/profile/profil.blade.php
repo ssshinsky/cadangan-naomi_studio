@@ -4,7 +4,7 @@
 
 @section('content')
 <main class="bg-naomi-bg min-h-screen pb-20">
-    <div class="max-w-7xl mx-auto px-6 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
 
         <div class="flex flex-col lg:flex-row gap-10">
 
@@ -54,7 +54,7 @@
             <div class="flex-1 space-y-8">
 
                 {{-- Header Card --}}
-                <div class="bg-naomi-white rounded-[3rem] p-10 flex flex-col md:flex-row gap-10 items-center md:items-start shadow-sm border border-charcoal/10 relative overflow-hidden">
+                <div class="bg-naomi-white rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start shadow-sm border border-charcoal/10 relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-0"></div>
 
                     <div class="relative z-10">
@@ -70,9 +70,9 @@
                     </div>
 
                     <div class="flex-1 z-10 w-full">
-                        <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-6">
-                            <div class="text-center md:text-left">
-                                <h1 class="serif-title text-5xl font-bold text-charcoal tracking-tighter">{{ $customer->name }}</h1>
+                        <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4">
+                            <div class="text-center sm:text-left">
+                                <h1 class="serif-title text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal tracking-tighter">{{ $customer->name }}</h1>
                                 <p class="text-charcoal/50 mt-2 font-medium">
                                     Bergabung sejak {{ ($customer->joined_at ?? $customer->created_at)->format('F Y') }}
                                 </p>
@@ -86,25 +86,25 @@
                 </div>
 
                 {{-- Info Pribadi --}}
-                <div class="bg-naomi-white rounded-[3rem] p-10 shadow-sm border border-charcoal/10">
-                    <div class="flex flex-row justify-between items-center gap-6 mb-12">
+                <div class="bg-naomi-white rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-sm border border-charcoal/10">
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-8 sm:mb-12">
                         <!-- Judul di sebelah kiri -->
                         <h2 class="serif-title text-2xl md:text-3xl font-bold text-charcoal">
                             Informasi Pribadi
                         </h2>
 
-                        <!-- Grup Tombol di sebelah kanan -->
-                        <div class="flex flex-shrink-0 items-center gap-3">
+                        <!-- Grup Tombol di pojok kanan, tidak melebar -->
+                        <div class="flex items-center gap-2 shrink-0">
                             <button 
                                 onclick="document.getElementById('passwordModal').classList.remove('hidden'); document.getElementById('passwordModal').classList.add('flex')"
-                                class="whitespace-nowrap px-6 py-4 border-2 border-charcoal/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-charcoal/60 hover:bg-naomi-bg transition-colors"
+                                class="whitespace-nowrap px-4 py-2.5 border-2 border-charcoal/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-charcoal/60 hover:bg-naomi-bg transition-colors"
                             >
                                 Ubah Password
                             </button>
                             
                             <a 
                                 href="{{ route('profil.edit') }}"
-                                class="whitespace-nowrap px-8 py-4 bg-charcoal text-naomi-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all shadow-lg text-center"
+                                class="whitespace-nowrap px-5 py-2.5 bg-charcoal text-naomi-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary transition-all shadow-md"
                             >
                                 Edit Profil
                             </a>
@@ -149,7 +149,7 @@
 
 {{-- Modal Ubah Password --}}
 <div id="passwordModal" class="hidden fixed inset-0 bg-charcoal/80 backdrop-blur-sm items-center justify-center z-50">
-    <div class="bg-naomi-white rounded-[3rem] p-12 max-w-md w-full mx-4 shadow-2xl border border-charcoal/10">
+    <div class="bg-naomi-white rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-12 max-w-md w-full mx-4 shadow-2xl border border-charcoal/10">
         <div class="flex justify-between items-center mb-8">
             <h3 class="serif-title text-2xl font-bold text-charcoal">Ubah Password</h3>
             <button onclick="document.getElementById('passwordModal').classList.add('hidden'); document.getElementById('passwordModal').classList.remove('flex')"

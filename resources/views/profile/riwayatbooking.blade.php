@@ -4,7 +4,7 @@
 
 @section('content')
 <main class="bg-naomi-bg min-h-screen pb-20">
-    <div class="max-w-7xl mx-auto px-6 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div class="flex flex-col lg:flex-row gap-10">
 
             {{-- SIDEBAR --}}
@@ -50,12 +50,12 @@
 
             {{-- KONTEN --}}
             <div class="flex-1 space-y-8">
-                <div class="mb-12">
-                    <h1 class="serif-title text-5xl font-bold text-charcoal tracking-tighter">Riwayat Booking</h1>
+                <div class="mb-8 sm:mb-12">
+                    <h1 class="serif-title text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal tracking-tighter">Riwayat Booking</h1>
                     <p class="text-charcoal/50 mt-3 font-medium">Pantau status pemesanan studio Anda secara real-time.</p>
                 </div>
 
-                <div class="flex gap-8 border-b border-charcoal/5 mb-10">
+                <div class="flex gap-4 sm:gap-8 border-b border-charcoal/5 mb-8 sm:mb-10">
                     <button onclick="switchTab(0)" id="tab0"
                             class="tab-button pb-6 border-b-4 border-primary text-charcoal font-black text-[10px] uppercase tracking-[0.2em] transition-all">
                         Pemesanan Aktif
@@ -70,8 +70,8 @@
                 <div id="content0" class="tab-content space-y-8">
                     @forelse($activeBookings as $booking)
                     @php $displayStatus = $booking->getDisplayStatus(); @endphp
-                    <div class="group bg-naomi-white rounded-[2.5rem] overflow-hidden border border-charcoal/5 hover:shadow-2xl hover:shadow-charcoal/5 transition-all duration-500 flex flex-col md:flex-row">
-                        <div class="md:w-72 h-64 relative overflow-hidden shrink-0">
+                    <div class="group bg-naomi-white rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-charcoal/5 hover:shadow-2xl hover:shadow-charcoal/5 transition-all duration-500 flex flex-col md:flex-row">
+                        <div class="w-full md:w-72 h-48 sm:h-64 relative overflow-hidden shrink-0">
                             @if($booking->studio->primaryImage)
                                 <img src="{{ asset('storage/' . $booking->studio->primaryImage->image_url) }}"
                                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $booking->studio->name }}">
@@ -84,11 +84,11 @@
                                 <x-booking-status :status="$displayStatus" />
                             </div>
                         </div>
-                        <div class="flex-1 p-10 flex flex-col justify-between">
+                        <div class="flex-1 p-6 sm:p-10 flex flex-col justify-between">
                             <div>
-                                <div class="flex justify-between items-start mb-4">
-                                    <h3 class="serif-title text-3xl font-bold text-charcoal">Sewa {{ $booking->studio->name }}</h3>
-                                    <p class="text-[10px] font-black text-primary bg-primary/5 px-3 py-1 rounded-lg">{{ $booking->booking_code }}</p>
+                                <div class="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0 mb-4">
+                                    <h3 class="serif-title text-2xl sm:text-3xl font-bold text-charcoal">Sewa {{ $booking->studio->name }}</h3>
+                                    <p class="text-[10px] font-black text-primary bg-primary/5 px-3 py-1 rounded-lg shrink-0">{{ $booking->booking_code }}</p>
                                 </div>
                                 <div class="space-y-3">
                                     <div class="flex items-center gap-3 text-charcoal/60">
@@ -101,12 +101,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mt-8 flex items-center justify-between border-t border-naomi-bg pt-6">
+                            <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-center justify-between border-t border-naomi-bg pt-6 gap-4">
                                 <div>
                                     <p class="text-[9px] font-black text-charcoal/30 uppercase tracking-widest mb-1">Total Bayar</p>
                                     <p class="text-xl font-black text-primary">Rp{{ number_format($booking->total_price, 0, ',', '.') }}</p>
                                 </div>
-                                <div class="flex gap-3 flex-wrap justify-end">
+                                <div class="flex gap-2 flex-wrap">
                                     @if($displayStatus === 'pending')
                                         <a href="{{ route('checkout', ['booking_id' => $booking->id]) }}"
                                            class="px-6 py-3 bg-primary text-naomi-white text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-charcoal transition-all shadow-xl shadow-primary/20">
@@ -154,9 +154,9 @@
                 <div id="content1" class="tab-content hidden space-y-8">
                     @forelse($completedBookings as $booking)
                     @php $displayStatus = $booking->getDisplayStatus(); @endphp
-                    <div class="group bg-naomi-white rounded-[2.5rem] overflow-hidden border border-charcoal/5 hover:shadow-2xl transition-all duration-500 flex flex-col">
+                    <div class="group bg-naomi-white rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-charcoal/5 hover:shadow-2xl transition-all duration-500 flex flex-col">
                         <div class="flex flex-col md:flex-row">
-                            <div class="md:w-72 h-64 relative overflow-hidden shrink-0">
+                            <div class="w-full md:w-72 h-48 sm:h-64 relative overflow-hidden shrink-0">
                                 @if($booking->studio->primaryImage)
                                     <img src="{{ asset('storage/' . $booking->studio->primaryImage->image_url) }}"
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $booking->studio->name }}">
@@ -169,11 +169,11 @@
                                     <x-booking-status :status="$displayStatus" />
                                 </div>
                             </div>
-                            <div class="flex-1 p-10 flex flex-col justify-between">
+                            <div class="flex-1 p-6 sm:p-10 flex flex-col justify-between">
                                 <div>
-                                    <div class="flex justify-between items-start mb-4">
-                                        <h3 class="serif-title text-3xl font-bold text-charcoal">Sewa {{ $booking->studio->name }}</h3>
-                                        <p class="text-[10px] font-black text-primary bg-primary/5 px-3 py-1 rounded-lg">{{ $booking->booking_code }}</p>
+                                    <div class="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0 mb-4">
+                                        <h3 class="serif-title text-2xl sm:text-3xl font-bold text-charcoal">Sewa {{ $booking->studio->name }}</h3>
+                                        <p class="text-[10px] font-black text-primary bg-primary/5 px-3 py-1 rounded-lg shrink-0">{{ $booking->booking_code }}</p>
                                     </div>
                                     <div class="space-y-3">
                                         <div class="flex items-center gap-3 text-charcoal/60">
@@ -208,9 +208,9 @@
                 </div>
 
                 {{-- CTA --}}
-                <div class="mt-20 bg-charcoal rounded-[3rem] p-12 text-center relative overflow-hidden">
+                <div class="mt-12 sm:mt-20 bg-charcoal rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 text-center relative overflow-hidden">
                     <div class="relative z-10">
-                        <h2 class="serif-title text-4xl font-bold text-naomi-white mb-4">Butuh Jadwal Baru?</h2>
+                        <h2 class="serif-title text-3xl sm:text-4xl font-bold text-naomi-white mb-4">Butuh Jadwal Baru?</h2>
                         <p class="text-naomi-white/50 max-w-md mx-auto font-medium mb-10 text-sm">Amankan slot studio favoritmu sebelum penuh.</p>
                         <a href="{{ route('studios.index') }}"
                            class="inline-flex items-center gap-4 bg-primary text-naomi-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:scale-105 transition-all shadow-2xl shadow-primary/20">
