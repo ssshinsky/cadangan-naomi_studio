@@ -6,10 +6,10 @@
 <main class="bg-naomi-bg">
 
     {{-- HERO SECTION --}}
-    <section class="relative py-20 lg:py-32 overflow-hidden">
+    <section class="relative py-14 lg:py-20 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                <div class="flex-1 space-y-8">
+            <div class="flex flex-col lg:flex-row items-center gap-10">
+                <div class="flex-1 space-y-5">
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.2em]">
                         <span class="size-2 rounded-full bg-primary animate-pulse"></span>
                         Premium Dance Space
@@ -36,8 +36,8 @@
     </section>
 
     {{-- STUDIO CARDS SECTION --}}
-    <section id="studio-cards" class="py-24">
-        <div class="max-w-7xl mx-auto px-6 lg:px-10 space-y-20">
+    <section id="studio-cards" class="py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 space-y-12">
 
             @foreach($studios as $i => $studio)
             <div class="bg-naomi-white rounded-[3rem] overflow-hidden shadow-xl border border-charcoal/5 flex flex-col {{ $i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse' }} group">
@@ -60,15 +60,15 @@
                 </div>
 
                 {{-- Info --}}
-                <div class="lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center">
-                    <span class="text-primary font-bold uppercase tracking-[0.2em] text-xs mb-3 block">
+                <div class="lg:w-2/5 p-8 lg:p-10 flex flex-col justify-center">
+                    <span class="text-primary font-bold uppercase tracking-[0.2em] text-xs mb-2 block">
                         {{ $studio->size_sqm ?? 'Premium Space' }}
                     </span>
-                    <h2 class="serif-title text-4xl lg:text-5xl font-bold text-charcoal mb-8 tracking-tight">
+                    <h2 class="serif-title text-4xl lg:text-5xl font-bold text-charcoal mb-5 tracking-tight">
                         {{ $studio->name }}
                     </h2>
 
-                    <div class="grid grid-cols-2 gap-6 border-y border-charcoal/5 py-8 mb-8">
+                    <div class="grid grid-cols-2 gap-4 border-y border-charcoal/5 py-5 mb-5">
                         <div>
                             <span class="text-naomi-muted text-[10px] font-black uppercase tracking-widest block mb-1">Kapasitas</span>
                             <p class="text-charcoal font-bold text-xl">{{ $studio->capacity }}+ Orang</p>
@@ -82,7 +82,7 @@
                         </div>
                     </div>
 
-                    <ul class="space-y-4 mb-10">
+                    <ul class="space-y-3 mb-6">
                         @foreach($studio->facilities->take(3) as $facility)
                         <li class="flex items-center gap-4 text-charcoal/70 text-sm font-medium">
                             <span class="material-symbols-outlined text-primary text-xl">{{ $facility->icon ?? 'check_circle' }}</span>
@@ -107,13 +107,13 @@
     </section>
 
     {{-- FASILITAS UMUM --}}
-    <section class="py-24 bg-naomi-bg">
+    <section class="py-12 bg-naomi-bg">
         <div class="max-w-7xl mx-auto px-6 lg:px-10 relative">
-            <div class="text-center mb-20">
+            <div class="text-center mb-10">
                 <h2 class="serif-title text-4xl font-bold mb-4 text-charcoal tracking-tight">Fasilitas <span class="text-primary">Umum</span></h2>
                 <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
             </div>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-12">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
                 @foreach([
                     ['icon' => 'weekend', 'title' => 'Area Tunggu', 'desc' => 'Lounge estetik & nyaman'],
                     ['icon' => 'shopping_basket', 'title' => 'Snack Shop', 'desc' => 'Menjual minuman & camilan'],
@@ -121,8 +121,8 @@
                     ['icon' => 'local_parking', 'title' => 'Parkir Luas', 'desc' => 'Aman untuk mobil & motor']
                 ] as $f)
                 <div class="text-center group">
-                    <div class="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:rotate-6 transition-all duration-300">
-                        <span class="material-symbols-outlined text-3xl text-primary group-hover:text-naomi-white transition-colors">{{ $f['icon'] }}</span>
+                    <div class="size-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:rotate-6 transition-all duration-300">
+                        <span class="material-symbols-outlined text-2xl text-primary group-hover:text-naomi-white transition-colors">{{ $f['icon'] }}</span>
                     </div>
                     <h4 class="serif-title text-lg font-bold mb-1 text-charcoal tracking-tight">{{ $f['title'] }}</h4>
                     <p class="text-naomi-muted text-xs font-medium">{{ $f['desc'] }}</p>

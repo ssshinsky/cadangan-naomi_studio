@@ -28,7 +28,7 @@
         </div>
 
         {{-- Floating Price & CTA Bar --}}
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 bg-naomi-white shadow-2xl rounded-[2.5rem] px-10 py-6 flex flex-col sm:flex-row items-center gap-8 z-30 w-[90%] md:w-auto border border-charcoal/5">
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-naomi-white shadow-2xl rounded-[2.5rem] px-8 py-4 flex flex-col sm:flex-row items-center gap-6 z-30 w-[90%] md:w-auto border border-charcoal/5">
             <div class="flex items-center gap-6">
                 @if($class->early_bird_price)
                 <div>
@@ -55,30 +55,30 @@
     </section>
 
     {{-- KELAS INFO SECTION (Rapet & Padat) --}}
-    <section class="py-12 px-6 max-w-7xl mx-auto">
-        <div class="mb-8">
+    <section class="py-10 px-6 max-w-7xl mx-auto">
+        <div class="mb-6">
             <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Schedule & Details</span>
             <h2 class="serif-title text-5xl font-bold text-charcoal tracking-tight leading-none">Informasi Pelaksanaan</h2>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            <div class="bg-naomi-white p-10 rounded-[2.5rem] shadow-sm border border-charcoal/5">
-                <span class="material-symbols-outlined text-5xl text-primary mb-6 block">schedule</span>
-                <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-2">Waktu & Tanggal</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+            <div class="bg-naomi-white p-7 rounded-[2.5rem] shadow-sm border border-charcoal/5">
+                <span class="material-symbols-outlined text-4xl text-primary mb-4 block">schedule</span>
+                <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-1">Waktu & Tanggal</p>
                 <p class="text-2xl font-black text-charcoal leading-tight">{{ $class->day_of_week }}</p>
                 <p class="text-base font-bold text-charcoal/70 mt-1">{{ substr($class->time_start, 0, 5) }} – {{ substr($class->time_end, 0, 5) }} WIB</p>
-                <p class="text-sm text-slate-400 mt-2">{{ $class->class_date ? $class->class_date->format('d M Y') : 'Segera Ditentukan' }}</p>
+                <p class="text-sm text-slate-400 mt-1">{{ $class->class_date ? $class->class_date->format('d M Y') : 'Segera Ditentukan' }}</p>
             </div>
             
-            <div class="bg-naomi-white p-10 rounded-[2.5rem] shadow-sm border border-charcoal/5 flex flex-col justify-center items-center md:items-start">
-                <span class="material-symbols-outlined text-5xl text-primary mb-6 block">person</span>
-                <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-2">Mentor / Koreografer</p>
+            <div class="bg-naomi-white p-7 rounded-[2.5rem] shadow-sm border border-charcoal/5 flex flex-col justify-center items-center md:items-start">
+                <span class="material-symbols-outlined text-4xl text-primary mb-4 block">person</span>
+                <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-1">Mentor / Koreografer</p>
                 <p class="text-3xl font-black text-charcoal leading-tight">{{ $class->mentor ? $class->mentor->name : $class->instructor_name }}</p>
             </div>
 
-            <div class="bg-naomi-white p-10 rounded-[2.5rem] shadow-sm border border-charcoal/5 flex flex-col justify-center items-center md:items-start">
-                <span class="material-symbols-outlined text-5xl text-primary mb-6 block">music_note</span>
-                <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-2">Song / Backsound</p>
+            <div class="bg-naomi-white p-7 rounded-[2.5rem] shadow-sm border border-charcoal/5 flex flex-col justify-center items-center md:items-start">
+                <span class="material-symbols-outlined text-4xl text-primary mb-4 block">music_note</span>
+                <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-1">Song / Backsound</p>
                 <p class="text-3xl font-black text-charcoal italic leading-tight">{{ $class->song_title ?? 'Diumumkan di Kelas' }}</p>
             </div>
         </div>
@@ -86,13 +86,13 @@
 
     {{-- DESKRIPSI MATERI SECTION (Jarak py dipangkas total) --}}
     @if($class->description)
-    <section class="py-12 bg-naomi-surface/30 border-y border-charcoal/5">
+    <section class="py-8 bg-naomi-surface/30 border-y border-charcoal/5">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-8">
+            <div class="mb-5">
                 <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Syllabus</span>
                 <h2 class="serif-title text-5xl font-bold text-charcoal tracking-tight leading-none">Tentang Kelas Ini</h2>
             </div>
-            <div class="bg-naomi-white rounded-[2.5rem] p-10 shadow-sm border border-charcoal/5">
+            <div class="bg-naomi-white rounded-[2.5rem] p-8 shadow-sm border border-charcoal/5">
                 <p class="text-charcoal/80 font-light leading-relaxed text-lg whitespace-pre-line">
                     {{ $class->description }}
                 </p>
@@ -103,41 +103,41 @@
 
     {{-- PROFIL MENTOR SECTION --}}
     @if($class->mentor)
-    <section class="py-12 px-6 max-w-7xl mx-auto">
-        <div class="mb-8">
+    <section class="py-8 px-6 max-w-7xl mx-auto">
+        <div class="mb-5">
             <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Instructor</span>
             <h2 class="serif-title text-5xl font-bold text-charcoal tracking-tight leading-none">Kenalan Sama Mentor</h2>
         </div>
 
-        <div class="bg-naomi-white p-10 md:p-14 rounded-[2.5rem] shadow-sm border border-charcoal/5">
-            <div class="flex flex-col md:flex-row gap-10 items-center md:items-start text-center md:text-left">
+        <div class="bg-naomi-white p-8 md:p-10 rounded-[2.5rem] shadow-sm border border-charcoal/5">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
                 <div class="shrink-0">
                     @if($class->mentor->photo)
                         <img src="{{ asset('storage/' . $class->mentor->photo) }}"
                              alt="{{ $class->mentor->name }}"
-                             class="w-32 h-32 rounded-[2rem] object-cover shadow-md border border-charcoal/5">
+                             class="w-28 h-28 rounded-[2rem] object-cover shadow-md border border-charcoal/5">
                     @else
-                        <div class="w-32 h-32 rounded-[2rem] bg-primary/10 flex items-center justify-center border border-charcoal/5">
+                        <div class="w-28 h-28 rounded-[2rem] bg-primary/10 flex items-center justify-center border border-charcoal/5">
                             <span class="material-symbols-outlined text-5xl text-primary">person</span>
                         </div>
                     @endif
                 </div>
 
-                <div class="flex-1 space-y-6 w-full">
+                <div class="flex-1 space-y-4 w-full">
                     <h3 class="serif-title text-4xl font-bold text-charcoal tracking-tight">{{ $class->mentor->name }}</h3>
                     @if($class->mentor->bio)
                         <p class="text-charcoal/70 leading-relaxed font-light text-base md:text-lg">{{ $class->mentor->bio }}</p>
                     @endif
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 text-left">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 text-left">
                         @if($class->mentor->experience)
-                        <div class="bg-naomi-bg p-6 rounded-2xl border border-charcoal/5">
+                        <div class="bg-naomi-bg p-5 rounded-2xl border border-charcoal/5">
                             <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-2">Pengalaman</p>
                             <p class="text-charcoal/80 text-sm font-light leading-relaxed">{{ $class->mentor->experience }}</p>
                         </div>
                         @endif
                         @if($class->mentor->expertise)
-                        <div class="bg-naomi-bg p-6 rounded-2xl border border-charcoal/5">
+                        <div class="bg-naomi-bg p-5 rounded-2xl border border-charcoal/5">
                             <p class="text-[10px] uppercase tracking-[0.2em] text-naomi-muted font-black mb-2">Keunggulan</p>
                             <p class="text-charcoal/80 text-sm font-light leading-relaxed">{{ $class->mentor->expertise }}</p>
                         </div>

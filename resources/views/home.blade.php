@@ -40,8 +40,8 @@
     </section>
 
     {{-- OPEN CLASS SECTION --}}
-    <section class="py-24 max-w-7xl mx-auto px-6 bg-naomi-bg">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+    <section class="py-12 max-w-7xl mx-auto px-6 bg-naomi-bg">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
                 <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Education</span>
                 <h2 class="serif-title text-4xl md:text-5xl font-bold text-charcoal">Upcoming Open Class</h2>
@@ -49,7 +49,7 @@
             <a href="{{ route('open-class.index') }}" class="hover-link text-primary font-bold border-b-2 border-primary/20 pb-1">Lihat Semua Jadwal</a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($openClasses as $class)
             <div class="card-naomi bg-naomi-white flex flex-col shadow-sm border-none overflow-hidden group cursor-pointer">
                 <div class="relative aspect-[4/5] overflow-hidden">
@@ -66,29 +66,29 @@
                     </div>
                 </div>
 
-                <div class="p-8 flex-grow flex flex-col">
-                    <div class="flex items-center gap-2 text-naomi-muted text-xs font-bold uppercase mb-3">
+                <div class="p-6 flex-grow flex flex-col">
+                    <div class="flex items-center gap-2 text-naomi-muted text-xs font-bold uppercase mb-2">
                         <span class="material-symbols-outlined text-sm text-primary">schedule</span>
                         <span>{{ $class->day_of_week }}, {{ substr($class->time_start, 0, 5) }} - {{ substr($class->time_end, 0, 5) }}</span>
                     </div>
 
-                    <h3 class="serif-title text-2xl font-bold text-charcoal group-hover:text-primary transition-colors mb-4">
+                    <h3 class="serif-title text-2xl font-bold text-charcoal group-hover:text-primary transition-colors mb-2">
                         {{ $class->title }}
                     </h3>
 
                     @if($class->song_title)
-                    <div class="flex items-center gap-2 text-[10px] font-bold text-charcoal/40 mb-3 italic">
+                    <div class="flex items-center gap-2 text-[10px] font-bold text-charcoal/40 mb-2 italic">
                         <span class="material-symbols-outlined text-xs">music_note</span>
                         {{ $class->song_title }}
                     </div>
                     @endif
 
-                    <p class="text-charcoal/70 text-sm leading-relaxed line-clamp-2 mb-8 flex-grow">
+                    <p class="text-charcoal/70 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
                         {{ $class->description }}
                     </p>
 
-                    <div class="pt-4">
-                        <a href="{{ route('open-class.show', $class->slug) }}" class="btn-main w-full py-4 rounded-xl text-sm text-center block">
+                    <div class="pt-3">
+                        <a href="{{ route('open-class.show', $class->slug) }}" class="btn-main w-full py-3 rounded-xl text-sm text-center block">
                             Daftar Kelas
                         </a>
                     </div>
@@ -103,15 +103,15 @@
     </section>
 
     {{-- STUDIO RENTAL SECTION --}}
-    <section class="py-24 bg-naomi-bg">
+    <section class="py-12 bg-naomi-bg">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Premium Spaces</span>
-                <h2 class="serif-title text-4xl md:text-5xl font-bold mb-6 text-charcoal">Sewa Studio Premium</h2>
+            <div class="text-center mb-8">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-3 block">Premium Spaces</span>
+                <h2 class="serif-title text-4xl md:text-5xl font-bold mb-4 text-charcoal">Sewa Studio Premium</h2>
                 <p class="text-naomi-muted max-w-xl mx-auto font-medium">Ruang latihan profesional dengan standar internasional untuk mendukung kreativitas tanpa batas.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
                 @foreach($studios as $studio)
                 <div class="card-naomi bg-naomi-white flex flex-col shadow-sm border-none">
                     <div class="h-72 overflow-hidden relative">
@@ -127,15 +127,15 @@
                             <div class="absolute top-4 right-4 bg-primary text-naomi-white px-4 py-1 rounded text-sm font-bold">Best Value</div>
                         @endif
                     </div>
-                    <div class="p-10 flex-grow flex flex-col">
-                        <div class="flex justify-between items-start mb-6">
+                    <div class="p-7 flex-grow flex flex-col">
+                        <div class="flex justify-between items-start mb-4">
                             <h3 class="serif-title text-3xl font-bold text-charcoal">{{ $studio->name }}</h3>
                             <div class="text-right">
                                 <span class="text-primary text-2xl font-black">Rp{{ number_format($studio->price_per_hour / 1000, 0) }}k</span>
                                 <span class="text-naomi-muted text-sm block">/ Jam</span>
                             </div>
                         </div>
-                        <ul class="space-y-4 mb-10 text-charcoal/80 flex-grow">
+                        <ul class="space-y-3 mb-6 text-charcoal/80 flex-grow">
                             @foreach($studio->facilities->take(3) as $facility)
                             <li class="flex items-center gap-3">
                                 <span class="material-symbols-outlined text-primary">check_circle</span>
@@ -156,15 +156,15 @@
     </section>
     {{-- REVIEW SECTION --}}
     @if($latestReviews->count() > 0)
-    <section class="py-24 bg-naomi-surface/10">
+    <section class="py-12 bg-naomi-surface/10">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Testimonials</span>
+            <div class="text-center mb-8">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-3 block">Testimonials</span>
                 <h2 class="serif-title text-4xl md:text-5xl font-bold text-charcoal">Kata Mereka</h2>
-                <p class="text-naomi-muted max-w-xl mx-auto font-medium mt-4">Pengalaman nyata dari pelanggan setia Naomi Studio.</p>
+                <p class="text-naomi-muted max-w-xl mx-auto font-medium mt-3">Pengalaman nyata dari pelanggan setia Naomi Studio.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($latestReviews as $review)
                 @php
                     $firstName  = mb_substr($review->customer->name, 0, 1);

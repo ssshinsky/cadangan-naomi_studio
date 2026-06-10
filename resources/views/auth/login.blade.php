@@ -55,12 +55,12 @@
                         @csrf
                         <div class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-[#171612] uppercase tracking-wider mb-2">Email atau Nomor WhatsApp</label>
+                                <label class="block text-sm font-bold text-[#171612] uppercase tracking-wider mb-2">Email</label>
                                 <div class="relative">
                                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#857d66]">person</span>
                                     <input name="email" type="text" required autofocus
                                            class="w-full pl-12 pr-4 py-4 rounded-2xl border border-[#e4e3dc] focus:border-primary focus:ring-2 focus:ring-primary outline-none text-lg"
-                                           placeholder="Contoh: 08123456789 atau nama@email.com">
+                                           placeholder="Contoh: nama@email.com">
                                 </div>
                             </div>
 
