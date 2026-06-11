@@ -16,6 +16,11 @@
         @endif
 
         <div class="relative z-20 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center items-start text-naomi-white">
+            <a href="{{ route('studios.index') }}"
+               class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-naomi-white/15 hover:bg-naomi-white/25 backdrop-blur-md rounded-full text-naomi-white text-[10px] font-black uppercase tracking-[0.2em] transition-all border border-naomi-white/20">
+                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                Kembali ke Daftar Studio
+            </a>
             <span class="inline-block px-5 py-2 bg-naomi-white/10 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6">
                 Premium Studio
             </span>

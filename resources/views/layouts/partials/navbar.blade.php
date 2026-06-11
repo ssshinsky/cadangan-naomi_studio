@@ -38,17 +38,28 @@
                         Admin Panel
                     </a>
                 @else
-                    <a href="{{ route('profil') }}" class="flex items-center gap-3 group">
-                        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-md group-hover:scale-105 transition-transform">
-                            @if(auth()->user()->customer?->avatar)
-                                <img src="{{ asset('storage/' . auth()->user()->customer->avatar) }}"
-                                     class="w-full h-full object-cover" alt="Profil">
-                            @else
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->customer?->name ?? 'U') }}&background=2D2A28&color=fff&bold=true"
-                                     class="w-full h-full object-cover" alt="Profil">
-                            @endif
-                        </div>
-                    </a>
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('profil') }}" class="flex items-center gap-3 group">
+                            <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary shadow-md group-hover:scale-105 transition-transform">
+                                @if(auth()->user()->customer?->avatar)
+                                    <img src="{{ asset('storage/' . auth()->user()->customer->avatar) }}"
+                                         class="w-full h-full object-cover" alt="Profil">
+                                @else
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->customer?->name ?? 'U') }}&background=2D2A28&color=fff&bold=true"
+                                         class="w-full h-full object-cover" alt="Profil">
+                                @endif
+                            </div>
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    title="Keluar"
+                                    class="flex items-center gap-1.5 px-3 py-2 text-charcoal/50 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all text-[10px] font-black uppercase tracking-wider">
+                                <span class="material-symbols-outlined text-base">logout</span>
+                                <span class="hidden md:inline">Keluar</span>
+                            </button>
+                        </form>
+                    </div>
                 @endif
             @else
                 <a href="{{ route('login') }}"
@@ -77,6 +88,18 @@
                     Masuk
                 </a>
             </div>
+            @else
+            @if(auth()->user()->role !== 'admin')
+            <div class="pt-3 border-t border-gray-100 mt-2">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-red-500 bg-red-50 hover:bg-red-100 rounded-xl transition-all">
+                        <span class="material-symbols-outlined text-base">logout</span>
+                        Keluar
+                    </button>
+                </form>
+            </div>
+            @endif
             @endguest
         </nav>
     </div>

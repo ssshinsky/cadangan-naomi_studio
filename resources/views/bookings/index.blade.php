@@ -8,6 +8,11 @@
 
     {{-- PAGE HEADER --}}
     <div class="mb-10">
+        <a href="{{ route('home') }}"
+           class="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-naomi-white border border-charcoal/10 hover:border-primary hover:text-primary text-charcoal/60 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-sm">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            Beranda
+        </a>
         <div class="flex items-center gap-2 mb-3">
             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
             <span class="text-[10px] font-black uppercase tracking-[0.4em] text-charcoal/60">Real-Time Availability</span>

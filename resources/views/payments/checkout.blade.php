@@ -7,6 +7,11 @@
     <div class="max-w-7xl mx-auto px-6 py-12">
 
         <div class="mb-12">
+            <a href="{{ route('booking.index') }}"
+               class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-naomi-white border border-charcoal/10 hover:border-primary hover:text-primary text-charcoal/60 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-sm">
+                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                Kembali ke Booking
+            </a>
             <h1 class="serif-title text-5xl md:text-6xl font-bold text-charcoal leading-[0.9] tracking-tighter">
                 Selesaikan <span class="text-primary italic">Pembayaran</span>
             </h1>
