@@ -8,7 +8,14 @@
     {{-- HERO SECTION --}}
     <section class="relative h-[85vh] md:h-[90vh] overflow-hidden">
         <div class="absolute inset-0 bg-charcoal/40 z-10"></div>
-        @if($class->thumbnail)
+        @if($class->video)
+            {{-- Video hero --}}
+            <video class="absolute inset-0 w-full h-full object-cover"
+                   autoplay muted loop playsinline
+                   poster="{{ $class->thumbnail ? asset('storage/' . $class->thumbnail) : '' }}">
+                <source src="{{ asset('storage/' . $class->video) }}" type="video/mp4">
+            </video>
+        @elseif($class->thumbnail)
             <div class="absolute inset-0 bg-cover bg-center animate-slow-zoom"
                  style="background-image: url('{{ asset('storage/' . $class->thumbnail) }}')"></div>
         @else

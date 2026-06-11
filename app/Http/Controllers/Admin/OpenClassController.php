@@ -37,6 +37,7 @@ class OpenClassController extends Controller
             'time_start'       => ['required'],
             'time_end'         => ['required'],
             'thumbnail'        => ['nullable', 'image', 'max:2048'],
+            'video'            => ['nullable', 'mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/webm', 'max:102400'],
         ]);
 
         $admin = auth()->user()->admin;
@@ -62,6 +63,10 @@ class OpenClassController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             $data['thumbnail'] = $request->file('thumbnail')->store('classes', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            $data['video'] = $request->file('video')->store('classes/videos', 'public');
         }
 
         OpenClass::create($data);
@@ -90,6 +95,7 @@ class OpenClassController extends Controller
             'time_start'       => ['required'],
             'time_end'         => ['required'],
             'thumbnail'        => ['nullable', 'image', 'max:2048'],
+            'video'            => ['nullable', 'mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/webm', 'max:102400'],
         ]);
 
         $mentor = \App\Models\Mentor::find($request->mentor_id);
@@ -116,6 +122,20 @@ class OpenClassController extends Controller
                 Storage::disk('public')->delete($class->thumbnail);
             }
             $data['thumbnail'] = $request->file('thumbnail')->store('classes', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            if ($class->video) {
+                Storage::disk('public')->delete($class->video);
+            }
+            $data['video'] = $request->file('video')->store('classes/videos', 'public');
+        }
+
+        if ($request->has('delete_video') && $request->delete_video == '1') {
+            if ($class->video) {
+                Storage::disk('public')->delete($class->video);
+            }
+            $data['video'] = null;
         }
 
         $class->update($data);

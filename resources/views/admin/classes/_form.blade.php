@@ -32,6 +32,45 @@
 
             <p class="text-[10px] text-slate-400 mt-3 text-center">Disarankan rasio 4:5 atau 1:1</p>
 
+            {{-- Upload Video --}}
+            <div class="mt-5 border-t border-slate-100 pt-5">
+                <h4 class="font-bold text-charcoal text-sm mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-base">videocam</span>
+                    Video Kelas
+                    <span class="text-[10px] text-slate-400 font-normal ml-auto">MP4/MOV · Maks. 100MB</span>
+                </h4>
+
+                @if(isset($class) && $class->video)
+                <div class="mb-3">
+                    <video src="{{ asset('storage/' . $class->video) }}"
+                           class="w-full aspect-video object-cover rounded-xl" controls muted playsinline id="currentVideo"></video>
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-[10px] text-slate-500 font-bold">Video saat ini</p>
+                        <label class="flex items-center gap-1.5 cursor-pointer text-[10px] text-red-500 font-bold">
+                            <input type="checkbox" name="delete_video" value="1" id="deleteVideoCheck"
+                                   class="w-3 h-3 accent-red-500"
+                                   onchange="document.getElementById('currentVideo').style.opacity = this.checked ? '0.3' : '1'">
+                            Hapus video
+                        </label>
+                    </div>
+                </div>
+                @endif
+
+                <div id="videoDropZone"
+                     onclick="document.getElementById('classVideoInput').click()"
+                     class="relative border-2 border-dashed border-slate-200 rounded-xl overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group">
+                    <div class="aspect-video w-full bg-slate-50 flex flex-col items-center justify-center gap-1.5" id="videoPlaceholder">
+                        <span class="material-symbols-outlined text-slate-300 text-3xl">upload</span>
+                        <p class="text-xs font-bold text-slate-500">{{ isset($class) && $class->video ? 'Ganti video' : 'Upload video kelas' }}</p>
+                        <p class="text-[10px] text-slate-400">MP4, MOV, WebM</p>
+                    </div>
+                    <video id="classVideoPreview" class="hidden w-full aspect-video object-cover" controls muted playsinline></video>
+                </div>
+                <input type="file" id="classVideoInput" name="video" class="hidden" accept="video/mp4,video/quicktime,video/webm,video/x-msvideo"
+                       onchange="previewClassVideo(this)">
+                <p id="classVideoFileName" class="text-[10px] text-primary font-bold mt-1.5 hidden"></p>
+            </div>
+
             {{-- Status aktif --}}
             <div class="mt-6 flex items-center gap-3 p-4 bg-slate-50 rounded-xl">
                 <input type="checkbox" name="is_active" id="is_active" value="1"
@@ -176,5 +215,19 @@ function previewThumb(input) {
         if (placeholder) placeholder.classList.add('hidden');
     };
     reader.readAsDataURL(input.files[0]);
+}
+
+function previewClassVideo(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const url = URL.createObjectURL(file);
+    const video = document.getElementById('classVideoPreview');
+    const placeholder = document.getElementById('videoPlaceholder');
+    const fileName = document.getElementById('classVideoFileName');
+    video.src = url;
+    video.classList.remove('hidden');
+    placeholder.classList.add('hidden');
+    fileName.textContent = file.name;
+    fileName.classList.remove('hidden');
 }
 </script>

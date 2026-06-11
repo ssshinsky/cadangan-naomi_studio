@@ -20,6 +20,7 @@ class Studio extends Model
         'capacity',
         'size_sqm',
         'floor_type',
+        'video',
         'is_available',
         'is_active',
     ];

@@ -18,6 +18,7 @@ class OpenClass extends Model
         'early_bird_price',
         'class_date',
         'thumbnail',
+        'video',
         'song_title',
         'whatsapp_link',
         'day_of_week',

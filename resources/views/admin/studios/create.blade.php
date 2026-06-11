@@ -168,6 +168,31 @@
                                onchange="addExtraImages(this)">
                     </div>
                 </div>
+
+                {{-- VIDEO STUDIO --}}
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2 mb-4 text-slate-800">
+                        <span class="material-symbols-outlined text-primary text-xl">videocam</span>
+                        <h3 class="font-sans font-bold">Video Studio</h3>
+                        <span class="text-[10px] text-slate-400 ml-auto">Opsional · MP4/MOV/WebM · Maks. 100MB</span>
+                    </div>
+
+                    <div id="videoDropZone"
+                         onclick="document.getElementById('videoInput').click()"
+                         class="relative border-2 border-dashed border-slate-200 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group">
+                        <div class="aspect-video w-full bg-slate-50 flex flex-col items-center justify-center gap-2" id="videoPlaceholder">
+                            <div class="bg-primary/10 size-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-primary">upload</span>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600">Klik untuk upload video</p>
+                            <p class="text-[10px] text-slate-400">MP4, MOV, WebM · Maks. 100MB</p>
+                        </div>
+                        <video id="videoPreview" class="hidden w-full aspect-video object-cover" controls muted playsinline></video>
+                    </div>
+                    <input type="file" id="videoInput" name="video" class="hidden" accept="video/mp4,video/quicktime,video/webm,video/x-msvideo"
+                           onchange="previewVideo(this)">
+                    <p id="videoFileName" class="text-[10px] text-primary font-bold mt-2 hidden"></p>
+                </div>
             </div>
         </div>
 
@@ -250,6 +275,20 @@ function syncExtraInput() {
     const dt = new DataTransfer();
     extraFiles.filter(Boolean).forEach(f => dt.items.add(f));
     document.getElementById('extraImagesInput').files = dt.files;
+}
+
+function previewVideo(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const url = URL.createObjectURL(file);
+    const video = document.getElementById('videoPreview');
+    const placeholder = document.getElementById('videoPlaceholder');
+    const fileName = document.getElementById('videoFileName');
+    video.src = url;
+    video.classList.remove('hidden');
+    placeholder.classList.add('hidden');
+    fileName.textContent = file.name;
+    fileName.classList.remove('hidden');
 }
 </script>
 @endsection

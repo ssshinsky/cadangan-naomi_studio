@@ -202,6 +202,47 @@
                     </div>
                     <div id="newExtraGrid" class="grid grid-cols-3 gap-2 mt-2"></div>
                 </div>
+
+                {{-- VIDEO STUDIO --}}
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center gap-2 mb-4 text-slate-800">
+                        <span class="material-symbols-outlined text-primary text-xl">videocam</span>
+                        <h3 class="font-sans font-bold">Video Studio</h3>
+                        <span class="text-[10px] text-slate-400 ml-auto">MP4/MOV/WebM · Maks. 100MB</span>
+                    </div>
+
+                    @if($studio->video)
+                    <div class="mb-3">
+                        <video src="{{ asset('storage/' . $studio->video) }}"
+                               class="w-full aspect-video object-cover rounded-2xl" controls muted playsinline id="currentVideo"></video>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-[10px] text-slate-500 font-bold">Video saat ini</p>
+                            <label class="flex items-center gap-1.5 cursor-pointer text-[10px] text-red-500 font-bold">
+                                <input type="checkbox" name="delete_video" value="1" id="deleteVideoCheck"
+                                       class="w-3 h-3 accent-red-500"
+                                       onchange="toggleDeleteVideo(this)">
+                                Hapus video ini
+                            </label>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div id="videoDropZone"
+                         onclick="document.getElementById('videoInput').click()"
+                         class="relative border-2 border-dashed border-slate-200 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group {{ $studio->video ? 'mt-3' : '' }}">
+                        <div class="aspect-video w-full bg-slate-50 flex flex-col items-center justify-center gap-2" id="videoPlaceholder">
+                            <div class="bg-primary/10 size-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-primary">upload</span>
+                            </div>
+                            <p class="text-sm font-bold text-slate-600">{{ $studio->video ? 'Ganti video' : 'Klik untuk upload video' }}</p>
+                            <p class="text-[10px] text-slate-400">MP4, MOV, WebM · Maks. 100MB</p>
+                        </div>
+                        <video id="videoPreview" class="hidden w-full aspect-video object-cover" controls muted playsinline></video>
+                    </div>
+                    <input type="file" id="videoInput" name="video" class="hidden" accept="video/mp4,video/quicktime,video/webm,video/x-msvideo"
+                           onchange="previewVideo(this)">
+                    <p id="videoFileName" class="text-[10px] text-primary font-bold mt-2 hidden"></p>
+                </div>
             </div>
         </div>
 
@@ -308,5 +349,26 @@ document.querySelectorAll('.delete-cb').forEach(cb => {
         updatePhotoCount();
     });
 });
+
+function previewVideo(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const url = URL.createObjectURL(file);
+    const video = document.getElementById('videoPreview');
+    const placeholder = document.getElementById('videoPlaceholder');
+    const fileName = document.getElementById('videoFileName');
+    video.src = url;
+    video.classList.remove('hidden');
+    placeholder.classList.add('hidden');
+    fileName.textContent = file.name;
+    fileName.classList.remove('hidden');
+}
+
+function toggleDeleteVideo(cb) {
+    const currentVideo = document.getElementById('currentVideo');
+    if (currentVideo) {
+        currentVideo.style.opacity = cb.checked ? '0.3' : '1';
+    }
+}
 </script>
 @endsection

@@ -37,6 +37,7 @@ class StudioController extends Controller
             'floor_type'     => ['nullable', 'string'],
             'facilities'     => ['nullable', 'string'],
             'primary_image'  => ['nullable', 'image', 'max:5120'],
+            'video'          => ['nullable', 'mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/webm', 'max:102400'],
         ]);
 
         $admin  = auth()->user()->admin;
@@ -55,6 +56,13 @@ class StudioController extends Controller
             'floor_type'            => $request->floor_type,
             'is_available'          => $request->has('is_available'),
         ]);
+
+        // Upload video utama
+        if ($request->hasFile('video')) {
+            $studio->update([
+                'video' => $request->file('video')->store('studios/videos', 'public'),
+            ]);
+        }
 
         // Upload foto utama
         if ($request->hasFile('primary_image')) {
@@ -116,6 +124,7 @@ class StudioController extends Controller
             'floor_type'     => ['nullable', 'string'],
             'facilities'     => ['nullable', 'string'],
             'primary_image'  => ['nullable', 'image', 'max:5120'],
+            'video'          => ['nullable', 'mimetypes:video/mp4,video/quicktime,video/x-msvideo,video/webm', 'max:102400'],
         ]);
 
         $studio->update([
@@ -132,6 +141,24 @@ class StudioController extends Controller
             'floor_type'            => $request->floor_type,
             'is_available'          => $request->has('is_available'),
         ]);
+
+        // Ganti video kalau ada upload baru
+        if ($request->hasFile('video')) {
+            if ($studio->video) {
+                Storage::disk('public')->delete($studio->video);
+            }
+            $studio->update([
+                'video' => $request->file('video')->store('studios/videos', 'public'),
+            ]);
+        }
+
+        // Hapus video jika diminta
+        if ($request->has('delete_video') && $request->delete_video == '1') {
+            if ($studio->video) {
+                Storage::disk('public')->delete($studio->video);
+            }
+            $studio->update(['video' => null]);
+        }
 
         // Ganti foto utama kalau ada upload baru
         if ($request->hasFile('primary_image')) {
