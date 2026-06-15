@@ -105,6 +105,12 @@
                 <span class="text-sm font-bold tracking-wide">Kelola Pesanan</span>
             </a>
 
+            <a href="{{ route('admin.availability.index') }}" 
+               class="{{ request()->is('admin/availability*') ? 'nav-active' : '' }} group flex items-center gap-4 px-5 py-4 rounded-2xl text-charcoal/60 hover:bg-naomi-bg/70 transition-all duration-300">
+                <span class="material-symbols-outlined group-hover:scale-110">calendar_today</span>
+                <span class="text-sm font-bold tracking-wide">Kalender Ketersediaan</span>
+            </a>
+
             <a href="{{ route('admin.classes.index') }}" 
                class="{{ request()->is('admin/kelas') ? 'nav-active' : '' }} group flex items-center gap-4 px-5 py-4 rounded-2xl text-charcoal/60 hover:bg-naomi-bg/70 transition-all duration-300">
                 <span class="material-symbols-outlined group-hover:scale-110">event_seat</span>

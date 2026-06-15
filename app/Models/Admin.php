@@ -45,4 +45,9 @@ class Admin extends Model
     {
         return $this->hasMany(Payment::class, 'verified_by');
     }
+
+    public function closures()
+    {
+        return $this->hasMany(StudioClosure::class, 'created_by');
+    }
 }

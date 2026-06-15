@@ -16,6 +16,8 @@ class BookingCart extends Model
         'participant_count',
         'total_price',
         'dp_amount',
+        'is_invalidated_by_closure',
+        'invalidated_by_closure_id',
     ];
 
     protected function casts(): array

@@ -271,6 +271,7 @@
         <div class="px-6 py-3 border-b border-naomi-bg flex items-center gap-4 text-[9px] font-black uppercase tracking-widest shrink-0">
             <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-green-100 border border-green-400 rounded-md inline-block"></span>Tersedia</span>
             <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-red-100 border border-red-400 rounded-md inline-block"></span>Terpesan</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-orange-100 border border-orange-400 rounded-md inline-block"></span>Ditutup</span>
             <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-primary rounded-md inline-block"></span>Dipilih</span>
         </div>
         <p class="px-6 pt-3 text-[10px] text-charcoal/40 font-medium shrink-0">Klik jam mulai → klik lagi untuk memperpanjang. Minimal 1 jam.</p>
@@ -376,8 +377,9 @@
 </div>
 
 <script>
-const studios     = @json($studiosJson);
-const bookedSlots = @json($bookedSlots);
+const studios      = @json($studiosJson);
+const bookedSlots  = @json($bookedSlots);
+const closedSlots  = @json($closedSlots);
 
 let currentStudioIndex = 0;
 let selectedStartTime  = null;
@@ -487,18 +489,21 @@ function generateSlots() {
         [0, 30].forEach(min => {
             const timeStr    = `${String(hour).padStart(2,'0')}:${String(min).padStart(2,'0')}`;
             const isBooked   = selectedDateStr ? isSlotBooked(studio.id, selectedDateStr, timeStr) : false;
+            const isClosed   = selectedDateStr ? isSlotClosed(studio.id, selectedDateStr, timeStr) : false;
             const isSelected = selectedStartTime && selectedEndTime && timeStr >= selectedStartTime && timeStr < selectedEndTime;
 
             const div = document.createElement('div');
             div.className = 'rounded-2xl text-center py-3 px-1 transition-all select-none ' +
-                (isBooked
-                    ? 'bg-red-50 text-red-400 border border-red-100 cursor-not-allowed'
-                    : isSelected
-                        ? 'bg-primary text-white border border-primary shadow-md cursor-pointer'
-                        : 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 cursor-pointer');
+                (isClosed
+                    ? 'bg-orange-50 text-orange-400 border border-orange-200 cursor-not-allowed'
+                    : isBooked
+                        ? 'bg-red-50 text-red-400 border border-red-100 cursor-not-allowed'
+                        : isSelected
+                            ? 'bg-primary text-white border border-primary shadow-md cursor-pointer'
+                            : 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 cursor-pointer');
 
             div.innerHTML = `<div class="font-black text-xs">${timeStr}</div>`;
-            if (!isBooked) div.onclick = () => selectSlot(timeStr);
+            if (!isBooked && !isClosed) div.onclick = () => selectSlot(timeStr);
             container.appendChild(div);
         });
     }
@@ -509,6 +514,17 @@ function isSlotBooked(studioId, date, time) {
         b.studio_id == studioId &&
         b.date <= date && (b.end_date >= date || b.date === date) &&
         b.start_time <= time && b.end_time > time
+    );
+}
+
+function isSlotClosed(studioId, date, time) {
+    // Slot pada waktu `time` (HH:MM) dianggap tertutup jika ada closure yang:
+    // closure.start_time <= time < closure.end_time (overlap dengan slot 30 menit mulai dari time)
+    const timeEnd = addMinutes(time, 30);
+    return closedSlots.some(c =>
+        c.studio_id == studioId &&
+        c.date === date &&
+        c.start_time < timeEnd && c.end_time > time
     );
 }
 
@@ -529,6 +545,26 @@ function selectSlot(time) {
         const minEnd = addMinutes(selectedStartTime, 60);
         selectedEndTime = newEnd > minEnd ? newEnd : minEnd;
     }
+
+    // Pastikan range yang dipilih tidak mencakup slot yang tertutup
+    if (selectedStartTime && selectedEndTime) {
+        const studio = studios[currentStudioIndex];
+        const hasClosedInRange = closedSlots.some(c =>
+            c.studio_id == studio.id &&
+            c.date === selectedDateStr &&
+            c.start_time < selectedEndTime && c.end_time > selectedStartTime
+        );
+        if (hasClosedInRange) {
+            showError('Slot yang dipilih mencakup waktu yang ditutup. Pilih slot lain.');
+            selectedStartTime = null;
+            selectedEndTime   = null;
+            generateSlots();
+            document.getElementById('slotModalSummary').classList.add('hidden');
+            updateSummary();
+            return;
+        }
+    }
+
     generateSlots();
 
     // Update summary di modal

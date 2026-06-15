@@ -112,6 +112,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Notifications
     Route::get('/notifications/{id}/read', [App\Http\Controllers\Admin\NotificationController::class, 'markRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [App\Http\Controllers\Admin\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+
+    // Closure Manager
+    Route::get('/closures', [App\Http\Controllers\Admin\ClosureController::class, 'index'])->name('closures.index');
+    Route::get('/closures/create', [App\Http\Controllers\Admin\ClosureController::class, 'create'])->name('closures.create');
+    Route::post('/closures', [App\Http\Controllers\Admin\ClosureController::class, 'store'])->name('closures.store');
+    Route::post('/closures/confirm', [App\Http\Controllers\Admin\ClosureController::class, 'confirmStore'])->name('closures.confirm-store');
+    Route::delete('/closures/{closure}', [App\Http\Controllers\Admin\ClosureController::class, 'destroy'])->name('closures.destroy');
+
+    // Availability Calendar
+    Route::get('/availability', [App\Http\Controllers\Admin\AvailabilityCalendarController::class, 'index'])->name('availability.index');
+    Route::get('/availability/data', [App\Http\Controllers\Admin\AvailabilityCalendarController::class, 'data'])->name('availability.data');
+    Route::get('/availability/day', [App\Http\Controllers\Admin\AvailabilityCalendarController::class, 'dayDetail'])->name('availability.day');
 });
 
 require __DIR__.'/auth.php';

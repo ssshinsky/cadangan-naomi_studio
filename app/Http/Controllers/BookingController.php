@@ -6,6 +6,8 @@ use App\Models\Admin;
 use App\Models\Booking;
 use App\Models\BookingCart;
 use App\Models\Studio;
+use App\Models\StudioClosure;
+use App\Services\ClosureService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -41,6 +43,18 @@ class BookingController extends Controller
 
         $cartItems = $customer->bookingCarts()->with('studio')->orderBy('date')->get();
 
+        // Ambil active closures untuk bulan/tahun yang diminta, diformat per tanggal
+        $closedSlots = StudioClosure::active()
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->get()
+            ->map(fn($c) => [
+                'studio_id'  => $c->studio_id,
+                'date'       => $c->date->format('Y-m-d'),
+                'start_time' => substr($c->start_time, 0, 5),
+                'end_time'   => substr($c->end_time, 0, 5),
+            ]);
+
         $studiosJson = $studios->map(fn($s) => [
             'id'                    => $s->id,
             'name'                  => $s->name,
@@ -52,7 +66,7 @@ class BookingController extends Controller
             'size_sqm'              => $s->size_sqm,
         ]);
 
-        return view('bookings.index', compact('studios', 'studiosJson', 'bookedSlots', 'cartItems', 'month', 'year', 'selectedStudioIndex'));
+        return view('bookings.index', compact('studios', 'studiosJson', 'bookedSlots', 'closedSlots', 'cartItems', 'month', 'year', 'selectedStudioIndex'));
     }
 
     // Tambah item ke keranjang
@@ -108,6 +122,14 @@ class BookingController extends Controller
 
         if ($booked) {
             return back()->with('cart_error', 'Slot ini sudah dipesan.');
+        }
+
+        // Cek active closure
+        $blocked = app(ClosureService::class)->isSlotBlocked(
+            $studio->id, $request->date, $request->start_time, $request->end_time
+        );
+        if ($blocked) {
+            return back()->with('cart_error', 'Slot ini tidak tersedia pada waktu yang dipilih.');
         }
 
         BookingCart::create([

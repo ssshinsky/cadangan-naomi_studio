@@ -71,4 +71,9 @@ class Studio extends Model
     {
         return $this->hasMany(StudioReview::class);
     }
+
+    public function closures(): HasMany
+    {
+        return $this->hasMany(StudioClosure::class);
+    }
 }
