@@ -182,7 +182,7 @@
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] font-black uppercase text-charcoal/50 tracking-widest">DP</span>
-                                <span class="font-black text-charcoal">Rp{{ number_format($totalDP, 0, ',', '.') }}</span>
+                                <span id="dpAmountDisplay" class="font-black text-charcoal">Rp0</span>
                             </div>
                         </div>
 
@@ -273,8 +273,9 @@ function selectPaymentOption(card, type) {
     icon.classList.replace('text-charcoal/20', 'text-primary');
 
     const amount = type === 'full' ? totalFull : totalDP;
-    document.getElementById('totalTagihan').textContent = 'Rp' + amount.toLocaleString('id-ID');
-}
+    document.getElementById('totalTagihan').textContent = 'Rp' + amount.toLocaleString('id-ID');    document.getElementById('dpAmountDisplay').textContent = type === 'full'
+        ? 'Rp0'
+        : 'Rp' + totalDP.toLocaleString('id-ID');}
 
 function selectTransferMethod(method) {
     document.querySelectorAll('.transfer-method').forEach(m => {

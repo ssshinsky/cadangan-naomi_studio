@@ -178,10 +178,11 @@ class BookingController extends Controller
                 'start_time'      => $item->start_time,
                 'end_time'        => $item->end_time,
                 'duration_hours'  => $item->duration_hours,
+                'participant_count'=> $item->participant_count,
                 'total_days'      => 1,
                 'total_price'     => $item->total_price,
                 'dp_amount'       => $item->dp_amount,
-                'remaining_amount'=> $item->total_price - $item->dp_amount,
+                'remaining_amount'=> $item->total_price,
                 'booking_status'  => 'pending',
             ]);
             $bookings[] = $booking->id;

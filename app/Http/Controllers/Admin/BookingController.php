@@ -76,6 +76,7 @@ class BookingController extends Controller
         $booking->update([
             'booking_status'  => 'confirmed',
             'remaining_amount'=> $remaining,
+            'dp_amount'       => $payment->payment_type === 'full' && $totalVerified === $booking->total_price ? 0 : $booking->dp_amount,
         ]);
 
         return back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
@@ -85,10 +86,23 @@ class BookingController extends Controller
     public function rejectPayment(Request $request, $paymentId)
     {
         $payment = Payment::findOrFail($paymentId);
+        $booking = $payment->booking;
+        $paymentType = $payment->payment_type;
 
         $payment->update([
             'status' => 'rejected',
             'notes'  => $request->reason ?? 'Bukti pembayaran tidak valid.',
+        ]);
+
+        $booking->refresh();
+        $totalVerified = $booking->payments()->where('status', 'verified')->sum('amount');
+        $remaining = max(0, $booking->total_price - $totalVerified);
+
+        $booking->update([
+            'remaining_amount' => $remaining,
+            'dp_amount'        => $paymentType === 'full' && $totalVerified === 0
+                ? $booking->studio->min_dp_amount
+                : $booking->dp_amount,
         ]);
 
         return back()->with('success', 'Bukti pembayaran ditolak.');

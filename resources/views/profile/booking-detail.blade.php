@@ -108,7 +108,10 @@
 
                         <div class="bg-primary/5 rounded-2xl p-5">
                             <span class="text-[10px] uppercase tracking-widest text-primary font-black">Status Pembayaran</span>
-                            @php $lastPayment = $booking->payments->last(); @endphp
+                            @php
+                                $lastPayment = $booking->payments->last();
+                                $verifiedDp = $booking->payments->where('status', 'verified')->where('payment_type', 'dp')->sum('amount');
+                            @endphp
                             @if($lastPayment && $lastPayment->status === 'verified')
                                 <div class="flex items-center gap-3 mt-3">
                                     @if($booking->remaining_amount == 0)
@@ -119,6 +122,12 @@
                                         <span class="text-xl font-bold text-amber-600">DP</span>
                                     @endif
                                 </div>
+                                @if($verifiedDp > 0)
+                                    <div class="mt-4">
+                                        <span class="text-[10px] uppercase tracking-widest text-charcoal/40 font-black">DP dibayar</span>
+                                        <p class="text-lg font-bold text-amber-600 mt-1">Rp{{ number_format($verifiedDp, 0, ',', '.') }}</p>
+                                    </div>
+                                @endif
                             @elseif($lastPayment && $lastPayment->status === 'pending')
                                 <div class="flex items-center gap-3 mt-3">
                                     <span class="material-symbols-outlined text-slate-400 text-3xl">hourglass_empty</span>
@@ -143,12 +152,25 @@
                                 <span class="text-sm">Sewa {{ $booking->studio->name }} ({{ $booking->duration_hours }} Jam × Rp{{ number_format($booking->studio->price_per_hour, 0, ',', '.') }})</span>
                                 <span class="font-medium sm:ml-4 shrink-0">Rp{{ number_format($booking->total_price, 0, ',', '.') }}</span>
                             </div>
-                            @if($booking->dp_amount > 0)
+                            @php
+                                $verifiedPayments = $booking->payments->where('status', 'verified');
+                            @endphp
+                            @foreach($verifiedPayments as $payment)
                             <div class="flex justify-between text-charcoal/70">
-                                <span>DP Dibayar</span>
-                                <span class="font-medium text-green-600">- Rp{{ number_format($booking->dp_amount, 0, ',', '.') }}</span>
+                                <span>
+                                    @if($payment->payment_type === 'dp')
+                                        DP Dibayar
+                                    @elseif($payment->payment_type === 'full')
+                                        Pembayaran Lunas
+                                    @elseif($payment->payment_type === 'pelunasan')
+                                        Pelunasan
+                                    @else
+                                        Pembayaran
+                                    @endif
+                                </span>
+                                <span class="font-medium text-green-600">- Rp{{ number_format($payment->amount, 0, ',', '.') }}</span>
                             </div>
-                            @endif
+                            @endforeach
                             <div class="pt-4 border-t border-charcoal/5 flex justify-between text-lg font-bold text-charcoal">
                                 <span>Sisa Tagihan</span>
                                 <span class="text-primary">Rp{{ number_format($booking->remaining_amount, 0, ',', '.') }}</span>
