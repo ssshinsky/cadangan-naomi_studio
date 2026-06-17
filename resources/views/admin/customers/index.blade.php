@@ -6,8 +6,8 @@
 
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
         <div>
-            <h2 class="font-serif text-3xl font-bold text-charcoal">Database Pelanggan</h2>
-            <p class="text-naomi-muted text-sm mt-1">Pantau status keaktifan dan riwayat pelanggan Naomi Studio.</p>
+            <h2 class="font-serif text-3xl font-bold text-slate-900">Database Pelanggan</h2>
+            <p class="text-slate-500 text-sm mt-1">Pantau status keaktifan dan riwayat pelanggan Naomi Studio.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3">

@@ -16,6 +16,14 @@ class NotificationController extends Controller
                 ->where('id', $id)
                 ->update(['read_at' => now()]);
 
+            if (request()->wantsJson() || request()->ajax()) {
+                return response()->json(['success' => true]);
+            }
+
+            if (request()->query('redirect') === 'back') {
+                return back()->with('success', 'Notifikasi telah ditandai sebagai dibaca.');
+            }
+
             $data      = json_decode($notification->data, true);
             $bookingId = $data['booking_id'] ?? null;
 
@@ -33,6 +41,10 @@ class NotificationController extends Controller
             ->whereNull('read_at')
             ->where('notifiable_type', 'App\Models\Admin')
             ->update(['read_at' => now()]);
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
 
         return back()->with('success', 'Semua notifikasi telah ditandai sebagai dibaca.');
     }

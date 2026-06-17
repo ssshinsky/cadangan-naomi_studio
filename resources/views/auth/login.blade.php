@@ -14,8 +14,8 @@
 
         <div class="absolute bottom-0 left-0 right-0 p-16 text-white z-10">
             <div class="max-w-md">
-                <h1 class="text-5xl font-extrabold leading-tight mb-6">Ekspresikan Dirimu Melalui Gerak.</h1>
-                <p class="text-xl text-white/80 font-light">Bergabunglah dengan komunitas tari terbaik dan temukan ritme hidupmu di Naomi Studio.</p>
+                <h1 class="text-5xl font-extrabold leading-tight mb-6">Ruang Bebas untuk Setiap Kreativitasmu.</h1>
+                <p class="text-xl text-white/80 font-light">Sewa studio multifungsi dengan fasilitas premium. Tempat terbaik untuk berlatih, berkarya, dan berkolaborasi di Naomi Studio.</p>
             </div>
         </div>
     </div>

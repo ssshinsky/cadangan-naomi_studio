@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <script>
         tailwind.config = {
@@ -172,6 +173,7 @@
                         ->where('notifiable_type', 'App\Models\Admin')
                         ->count();
                     $latestNotifications = \Illuminate\Support\Facades\DB::table('notifications')
+                        ->whereNull('read_at')
                         ->where('notifiable_type', 'App\Models\Admin')
                         ->orderByDesc('created_at')
                         ->limit(5)
@@ -187,7 +189,7 @@
                     <button @click="open = !open" class="relative p-2 rounded-xl text-charcoal/60 hover:bg-naomi-surface transition-colors duration-200">
                         <span class="material-symbols-outlined text-2xl">notifications</span>
                         @if($unreadCount > 0)
-                            <span class="absolute top-1 right-1 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center px-1 leading-none">
+                            <span id="notif-unread-count" class="absolute top-1 right-1 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center px-1 leading-none">
                                 {{ $unreadCount > 99 ? '99+' : $unreadCount }}
                             </span>
                         @endif
@@ -221,26 +223,33 @@
                         {{-- List --}}
                         <div class="divide-y divide-naomi-muted/10 max-h-72 overflow-y-auto custom-scrollbar">
                             @forelse($latestNotifications as $notif)
-                                <a href="{{ route('admin.notifications.read', $notif->id) }}"
-                                   class="flex items-start gap-3 px-5 py-4 hover:bg-naomi-bg transition-colors duration-150 {{ is_null($notif->read_at) ? 'bg-primary/5' : '' }}">
-                                    <div class="mt-0.5 size-8 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                        <span class="material-symbols-outlined text-base text-primary">calendar_month</span>
+                                <div data-notif-id="{{ $notif->id }}" class="flex items-center justify-between px-5 py-4 hover:bg-naomi-bg transition-colors duration-150 bg-primary/5">
+                                    <a href="#" class="flex items-start gap-3 flex-1 min-w-0">
+                                        <div class="mt-0.5 size-8 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                            <span class="material-symbols-outlined text-base text-primary">calendar_month</span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-xs font-bold text-charcoal truncate">
+                                                {{ $notif->data['customer_name'] ?? 'Customer' }}
+                                            </p>
+                                            <p class="text-[11px] text-charcoal/60 truncate">
+                                                Booking #{{ $notif->data['booking_code'] ?? '-' }}
+                                            </p>
+                                            <p class="text-[10px] text-naomi-muted mt-0.5">
+                                                {{ \Carbon\Carbon::parse($notif->created_at)->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div class="flex items-center gap-2 flex-shrink-0 ml-2">
+                                        <button type="button" data-url="{{ route('admin.notifications.read.post', $notif->id) }}"
+                                                onclick="event.preventDefault(); event.stopPropagation(); adminNotifMarkRead(this);"
+                                                class="js-mark-read inline-flex items-center gap-1 px-3 py-2 rounded-full text-[11px] font-semibold transition duration-200 min-w-[76px] justify-center bg-primary text-white hover:bg-primary/90 cursor-pointer relative z-10"
+                                                title="Tandai dibaca">
+                                            <span class="material-symbols-outlined text-base leading-none">check_circle</span>
+                                            <span>Baca</span>
+                                        </button>
                                     </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-xs font-bold text-charcoal truncate">
-                                            {{ $notif->data['customer_name'] ?? 'Customer' }}
-                                        </p>
-                                        <p class="text-[11px] text-charcoal/60 truncate">
-                                            Booking #{{ $notif->data['booking_code'] ?? '-' }}
-                                        </p>
-                                        <p class="text-[10px] text-naomi-muted mt-0.5">
-                                            {{ \Carbon\Carbon::parse($notif->created_at)->diffForHumans() }}
-                                        </p>
-                                    </div>
-                                    @if(is_null($notif->read_at))
-                                        <div class="size-2 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
-                                    @endif
-                                </a>
+                                </div>
                             @empty
                                 <div class="px-5 py-8 text-center">
                                     <span class="material-symbols-outlined text-3xl text-naomi-muted">notifications_off</span>
@@ -272,6 +281,58 @@
 </div>
 
 @include('components.toast')
+<script>
+    (function(){
+        const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+        const csrfToken = tokenMeta ? tokenMeta.getAttribute('content') : '';
+
+        document.addEventListener('click', function(e){
+            const btn = e.target.closest('.js-mark-read');
+            if(!btn) return;
+            e.preventDefault();
+            const url = btn.getAttribute('data-url');
+            const item = btn.closest('[data-notif-id]');
+            if(!url) return;
+
+            adminNotifMarkRead(btn, url, item, csrfToken);
+        });
+
+        window.adminNotifMarkRead = function(element, url, item, csrfToken) {
+            const targetUrl = url || element.getAttribute('data-url');
+            const targetItem = item || element.closest('[data-notif-id]');
+            const token = csrfToken || document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+            if (!targetUrl) return;
+
+            fetch(targetUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).then(res => res.json()).then(data => {
+                if (data && data.success) {
+                    const redDot = targetItem ? targetItem.querySelector('.w-2.h-2.rounded-full.bg-red-500') : null;
+                    if (redDot) redDot.remove();
+                    element.remove();
+                    if (targetItem) targetItem.classList.remove('bg-primary/5');
+                    const badge = document.getElementById('notif-unread-count');
+                    if (badge) {
+                        let text = badge.textContent.trim();
+                        if (text.endsWith('+')) text = text.replace('+','');
+                        let num = parseInt(text, 10) || 0;
+                        num = Math.max(0, num - 1);
+                        if (num === 0) badge.remove();
+                        else badge.textContent = num > 99 ? '99+' : String(num);
+                    }
+                }
+            }).catch(() => {
+                // ignore errors for now
+            });
+        };
+    })();
+</script>
 @stack('scripts')
 </body>
 </html>
