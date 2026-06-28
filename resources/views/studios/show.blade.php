@@ -151,7 +151,7 @@
             <div class="bg-naomi-white p-8 rounded-[2rem] shadow-sm">
                 <span class="material-symbols-outlined text-4xl text-primary mb-4 block">groups</span>
                 <p class="text-naomi-muted text-xs font-black uppercase tracking-widest mb-2">Kapasitas</p>
-                <p class="text-2xl font-black text-charcoal">{{ $studio->capacity }}+ Orang</p>
+                <p class="text-2xl font-black text-charcoal">{{ $studio->capacity }} Orang</p>
             </div>
             <div class="bg-naomi-white p-8 rounded-[2rem] shadow-sm">
                 <span class="material-symbols-outlined text-4xl text-primary mb-4 block">straighten</span>

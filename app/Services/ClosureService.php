@@ -122,8 +122,9 @@ class ClosureService
         // Generate slot per jam: 08:00–22:00 (14 slot)
         $slots = [];
         for ($hour = 8; $hour < 22; $hour++) {
-            $slotStart = sprintf('%02d:00', $hour);
-            $slotEnd   = sprintf('%02d:00', $hour + 1);
+            // Gunakan format HH:MM:SS agar konsisten dengan nilai TIME dari MySQL
+            $slotStart = sprintf('%02d:00:00', $hour);
+            $slotEnd   = sprintf('%02d:00:00', $hour + 1);
 
             // Cek apakah slot ini overlap dengan closure manapun
             // Kondisi overlap: closure.start_time < slotEnd AND closure.end_time > slotStart
@@ -133,8 +134,8 @@ class ClosureService
 
             if ($matchingClosure) {
                 $slots[] = [
-                    'start'   => $slotStart,
-                    'end'     => $slotEnd,
+                    'start'   => substr($slotStart, 0, 5),
+                    'end'     => substr($slotEnd, 0, 5),
                     'status'  => 'closed',
                     'closure' => [
                         'id'         => $matchingClosure->id,
@@ -147,14 +148,15 @@ class ClosureService
             }
 
             // Cek apakah slot ini overlap dengan booking manapun
+            // slotStart/slotEnd sudah dalam format HH:MM:SS agar konsisten dengan nilai TIME MySQL
             $matchingBooking = $bookings->first(function ($booking) use ($slotStart, $slotEnd) {
                 return $booking->start_time < $slotEnd && $booking->end_time > $slotStart;
             });
 
             if ($matchingBooking) {
                 $slots[] = [
-                    'start'   => $slotStart,
-                    'end'     => $slotEnd,
+                    'start'   => substr($slotStart, 0, 5),
+                    'end'     => substr($slotEnd, 0, 5),
                     'status'  => 'booked',
                     'closure' => null,
                     'booking' => [
@@ -169,8 +171,8 @@ class ClosureService
 
             // Slot tersedia
             $slots[] = [
-                'start'   => $slotStart,
-                'end'     => $slotEnd,
+                'start'   => substr($slotStart, 0, 5),
+                'end'     => substr($slotEnd, 0, 5),
                 'status'  => 'available',
                 'closure' => null,
                 'booking' => null,
@@ -230,8 +232,9 @@ class ClosureService
 
             // Iterasi 14 slot per jam: 08:00 – 22:00
             for ($hour = 8; $hour < 22; $hour++) {
-                $slotStart = sprintf('%02d:00', $hour);
-                $slotEnd   = sprintf('%02d:00', $hour + 1);
+                // Gunakan format HH:MM:SS agar konsisten dengan nilai TIME dari MySQL
+                $slotStart = sprintf('%02d:00:00', $hour);
+                $slotEnd   = sprintf('%02d:00:00', $hour + 1);
 
                 // Prioritas 1: cek closure
                 // Kondisi overlap: closure.start_time < slotEnd AND closure.end_time > slotStart
