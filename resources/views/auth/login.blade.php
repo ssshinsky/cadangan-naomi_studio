@@ -14,8 +14,8 @@
 
         <div class="absolute bottom-0 left-0 right-0 p-16 text-white z-10">
             <div class="max-w-md">
-                <h1 class="text-5xl font-extrabold leading-tight mb-6">Ruang Bebas untuk Setiap Kreativitasmu.</h1>
-                <p class="text-xl text-white/80 font-light">Sewa studio multifungsi dengan fasilitas premium. Tempat terbaik untuk berlatih, berkarya, dan berkolaborasi di Naomi Studio.</p>
+                <h1 class="serif-title text-5xl font-extrabold leading-tight mb-6">Ruang Bebas untuk Setiap Kreativitasmu.</h1>
+                <p class="text-xl text-white/80 font-light" style="font-family: 'Poppins', sans-serif;">Sewa studio multifungsi dengan fasilitas premium. Tempat terbaik untuk berlatih, berkarya, dan berkolaborasi di Naomi Studio.</p>
             </div>
         </div>
     </div>
@@ -35,8 +35,8 @@
             <!-- LOGIN FORM -->
             <div class="w-full flex-shrink-0 px-8 md:px-12 lg:px-20 py-12 overflow-y-auto">
                 <div class="max-w-md mx-auto">
-                    <h2 class="text-4xl font-black tracking-tight mb-3">Selamat Datang</h2>
-                    <p class="text-[#857d66] mb-10">Silakan masuk untuk melanjutkan latihan Anda.</p>
+                    <h2 class="serif-title text-4xl font-black tracking-tight mb-3">Selamat Datang</h2>
+                    <p class="text-[#857d66] mb-10" style="font-family: 'Poppins', sans-serif;">Silakan masuk untuk melanjutkan latihan Anda.</p>
 
                     @if(session('error'))
                     <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-2xl text-sm font-medium flex items-center gap-3">
@@ -99,8 +99,8 @@
                         Kembali ke Masuk
                     </button>
 
-                    <h2 class="text-4xl font-black tracking-tight mb-3">Buat Akun Baru</h2>
-                    <p class="text-[#857d66] mb-10">Mulai perjalanan tari Anda hari ini.</p>
+                    <h2 class="serif-title text-4xl font-black tracking-tight mb-3">Buat Akun Baru</h2>
+                    <p class="text-[#857d66] mb-10" style="font-family: 'Poppins', sans-serif;">Mulai perjalanan tari Anda hari ini.</p>
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf

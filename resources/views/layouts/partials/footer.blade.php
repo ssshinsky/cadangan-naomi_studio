@@ -46,7 +46,7 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-lg">mail</span>
-                        <span>hello@naomistudio.com</span>
+                        <span>naomistudiojogja@gmail.com</span>
                     </li>
                 </ul>
             </div>

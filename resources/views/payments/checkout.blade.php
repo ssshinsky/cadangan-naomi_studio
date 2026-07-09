@@ -98,8 +98,8 @@
                             <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
                                 <div>
                                     <p class="text-[10px] uppercase font-black text-charcoal/60 tracking-[0.2em] mb-2">Nomor Rekening Tujuan</p>
-                                    <p id="norekDisplay" class="text-4xl font-black text-charcoal tracking-widest">8830 1928 4401</p>
-                                    <p id="bankName" class="text-sm text-primary mt-2 font-black uppercase tracking-widest">a.n Naomi Studio Indonesia (BCA)</p>
+                                    <p id="norekDisplay" class="text-4xl font-black text-charcoal tracking-widest">6975716558</p>
+                                    <p id="bankName" class="text-sm text-primary mt-2 font-black uppercase tracking-widest">a.n Cornelia Rosalin Naomi (BCA)</p>
                                 </div>
                                 <div class="flex flex-col items-center gap-3">
                                     <button type="button" onclick="copyRekening()"
@@ -117,11 +117,10 @@
 
                         <div id="qrisDetail" class="hidden bg-naomi-bg rounded-[2.5rem] p-12 text-center border-2 border-dashed border-primary/30">
                             <p class="text-[10px] uppercase font-black text-charcoal/60 tracking-widest mb-6">Scan QRIS via Mobile Banking / E-Wallet</p>
-                            <div class="mx-auto w-56 h-56 bg-naomi-white p-6 rounded-[2rem] shadow-xl border border-charcoal/5">
-                                <div class="w-full h-full bg-charcoal/5 rounded-xl flex items-center justify-center text-charcoal/20 font-black text-xs uppercase tracking-tighter">
-                                    QRIS CODE
-                                </div>
+                            <div class="mx-auto w-56 bg-naomi-white p-4 rounded-[2rem] shadow-xl border border-charcoal/5">
+                                <img src="{{ asset('storage/aset aku/qris.jpeg') }}" alt="QRIS Naomi Studio" class="w-full h-auto rounded-xl object-contain">
                             </div>
+                            <p class="text-xs text-charcoal/50 mt-4 font-medium">Naomi Studio</p>
                         </div>
                     </div>
                 </section>
@@ -244,8 +243,8 @@ const totalDP   = {{ $totalDP }};
 let currentPaymentType = 'full';
 
 const bankAccounts = {
-    transfer_bca: { norek: '8830 1928 4401', name: 'a.n Naomi Studio Indonesia (BCA)' },
-    transfer_bni: { norek: '0123 4567 8901', name: 'a.n Naomi Studio Indonesia (BNI)' },
+    transfer_bca: { norek: '6975716558', name: 'a.n Cornelia Rosalin Naomi (BCA)' },
+    transfer_bni: { norek: '0295134957', name: 'a.n Cornelia Rosalin Naomi (BNI)' },
 };
 
 function selectPaymentOption(card, type) {

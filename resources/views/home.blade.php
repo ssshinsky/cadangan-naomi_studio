@@ -9,7 +9,7 @@
     <section class="relative h-screen w-full overflow-hidden">
         <div class="absolute inset-0 bg-charcoal/50 z-10"></div>
         <div class="absolute inset-0 bg-cover bg-center"
-             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDImmgvEFaeBMb9o8HYjRAtBfSetLRQoqRPOswpLWZfx_yk2hb9sUqS3DDwwWRBbszRCsNrugRYUcncED4vComtpgV4wIBrKk_4k67I5HUE3t3POVHTcTRvlg1f1uYJyHnteyS5qa4hWeHc4x--0vD_avIkpKbAGH_xofqtEsgmJFedUph7bKP8-8IVxU9auRwsyn30KqqwaoIr3GA8kKi20zyux5gFw-btcz7cWHAnboA_ab0XdqEbWkDQIccWOWzigf9zZ5fK0Qk8')">
+             style="background-image: url('{{ asset('storage/aset aku/bg homepagee.JPG') }}')">
         </div>
 
         <div class="relative z-20 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center items-start">

@@ -27,7 +27,9 @@
                 </div>
                 <div class="flex-1 w-full relative">
                     <div class="aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-naomi-white rotate-2">
-                        <div class="w-full h-full bg-cover bg-center animate-slow-zoom" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC60v8ynFPTN5KKXAlT-sm7EtQMlIQjXU3yDcaIW7m-jOlsJG8w74q7NUk513C63pcL7ii7fBwb78Xua0UkzM-X0otF-PGjWZw86csNRYWAb1T0bAdhhtAFUowoYUy9hcSulNVLeP5Q0rN25HpJKWEJdAtjGEK2mhn2GjQpTZJDP2Aoxzwn4oMQO1ppNCX9lpJd00M4sATPzXFmNiypEpdKlrH0AP0f5-adYJUo7b8AKaGjNmHQg-o_--kkHKYhaGvqqhW3rx27Lq6k')"></div>
+                        <div class="w-full h-full bg-cover bg-center animate-slow-zoom" 
+                            style="background-image: url('{{ asset('storage/aset aku/halaman studio.JPG') }}')">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,7 +73,7 @@
                     <div class="grid grid-cols-2 gap-4 border-y border-charcoal/5 py-5 mb-5">
                         <div>
                             <span class="text-naomi-muted text-[10px] font-black uppercase tracking-widest block mb-1">Kapasitas</span>
-                            <p class="text-charcoal font-bold text-xl">{{ $studio->capacity }}+ Orang</p>
+                            <p class="text-charcoal font-bold text-xl">{{ $studio->capacity }} Orang</p>
                         </div>
                         <div>
                             <span class="text-naomi-muted text-[10px] font-black uppercase tracking-widest block mb-1">Harga Sewa</span>

@@ -64,8 +64,9 @@
                 </div>
 
                 <div class="mt-20">
-                    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=2069" 
-                         class="w-full h-80 object-cover rounded-[2.5rem] shadow-2xl transition-transform duration-700" alt="Studio Interior">
+                    <img src="{{ asset('storage/aset aku/s kecil.PNG') }}" 
+                        class="w-full h-80 object-cover rounded-[2.5rem] shadow-2xl transition-transform duration-700" 
+                        alt="Studio Interior">
                 </div>
             </div>
 
@@ -107,7 +108,7 @@
                 </div>
 
                 <div class="mt-20">
-                    <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=1887" 
+                    <img src="{{ asset('storage/aset aku/open class.JPEG') }}"  
                          class="w-full h-80 object-cover rounded-[2.5rem] shadow-2xl transition-transform duration-700" alt="Dancer Motion">
                 </div>
             </div>

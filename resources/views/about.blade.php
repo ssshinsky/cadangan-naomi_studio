@@ -19,18 +19,18 @@
                     Tentang <br/><span class="text-primary italic font-medium">Naomi Studio</span>
                 </h1>
                 <p class="text-xl md:text-2xl text-charcoal/120 max-w-xl leading-relaxed mb-8 font-light">
-                    Wadah Kreativitas & Eksperimen Gerak di <span class="text-charcoal font-medium">Yogyakarta.</span>
+                    Wadah Kreativitas & Berbagai Macam Seni di <span class="text-charcoal font-medium">Yogyakarta.</span>
                 </p>
                 <div class="flex items-center gap-6">
                     <div class="h-[1px] w-20 bg-charcoal/20"></div>
-                    <span class="uppercase tracking-[0.3em] text-[10px] text-charcoal/40 font-black italic">Est. 2024</span>
+                    <span class="uppercase tracking-[0.3em] text-[10px] text-charcoal/40 font-black italic">Est. 2022</span>
                 </div>
             </div>
 
             <div class="lg:col-span-5 relative">
                 {{-- Frame Foto Premium --}}
                 <div class="relative z-10 -rotate-2 group shadow-2xl rounded-[3rem] overflow-hidden aspect-[4/5] border-[12px] border-naomi-white">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNmZfJSrqb3HsmM9-uWJMcDWLmtCB8G_xeySOBDv0SNgSbr6dWjiXSfULJvLPEiVE_xzMtlGuxFW38IDA4RYz5WpUBjDyox4JyIoGaSTFHwvpuJ9ZaCuvzel441Qd2iTOEULmBfNDBirOC2lhOR1rmfT9xxk_2TAIn3Xrr0y292u-JWiFRBuGVNwnEJMVOnpiDQHQg0RDGDoZpmuxwLN70oLf0_aVGhWP5fno8BoANnJqefi7q95bVaDL286BOD8H0LROR-hj0mHgR" 
+                    <img src="{{ asset('storage/aset aku/halaman about.JPG') }}" 
                          class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Professional dancer">
                 </div>
                 {{-- Aksen Lingkaran --}}
@@ -45,13 +45,13 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
                 <div class="order-2 lg:order-1 relative">
                     <div class="bg-naomi-bg p-4 rounded-[2.5rem] shadow-sm relative z-10">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhc8NhNiA_ddeM8Cq1-CvHQStqukFl_pX9WRrGhmdtIc7pl0HYSNFvzsFx2I_6pwZiP2RmrXFS9rG-H-pSs7HWWmJid257s2ousoXNZpec3TO3cpWzIzhL_eriVGq15FI-KBDFlGo2VuVtH7rinaWfx0frTwauK9urKoW2-12RC8bWOAqPOcoCK_JurFudAm5uj8ZcKUvTk_JwRfzzjxCTBHiNxBTPhUy_UIuJN6GlJoOw_EB1agRE3ac6TVWmAIT8OV4LdgyHqGGV" 
+                        <img src="{{ asset('storage/aset aku/Profile Pic.JPEG') }}" 
                              class="rounded-[2rem] grayscale hover:grayscale-0 transition-all duration-1000 aspect-[4/3] object-cover" alt="Cornelia at studio">
                     </div>
                     {{-- Badge Melayang --}}
                     <div class="absolute -top-8 -right-8 p-10 bg-charcoal text-naomi-white rounded-full shadow-2xl z-20 flex flex-col items-center justify-center border-4 border-naomi-white">
                         <span class="text-[10px] font-black tracking-widest uppercase opacity-50">Since</span>
-                        <span class="serif-title italic text-3xl font-bold">2024</span>
+                        <span class="serif-title italic text-3xl font-bold">2022</span>
                     </div>
                 </div>
 
@@ -61,11 +61,11 @@
                         <span class="uppercase tracking-[0.3em] text-[10px] text-primary font-black">Our Origin Story</span>
                     </div>
                     <h2 class="serif-title text-5xl md:text-6xl font-bold leading-tight text-charcoal tracking-tight">
-                        Visi Cornelia: <br/><span class="italic text-primary font-medium">Ruang Tanpa Batas</span>
+                        Visi Naomi: <br/><span class="italic text-primary font-medium">Ruang Tanpa Batas</span>
                     </h2>
                     <div class="space-y-4 text-charcoal/120 text-lg leading-relaxed font-light">
-                        <p>Berawal dari keresahan <span class="text-charcoal font-medium italic">Cornelia</span> akan kurangnya ruang representatif di Yogyakarta, Naomi Studio lahir sebagai manifestasi dari dedikasi terhadap estetika dan fungsionalitas.</p>
-                        <p>Kami percaya bahwa setiap gerak, nada, dan ekspresi membutuhkan panggung yang layak. Naomi Studio dirancang untuk menjadi rumah yang inklusif—tempat kolaborasi lintas disiplin untuk melampaui batasan kreatif.</p>
+                        <p>Naomi Studio didirikan pada tahun 2022, berawal dari sebuah visi untuk menghadirkan ruang kreatif yang representatif dan representasi dari masih terbatasnya fasilitas studio tari berskala luas di Yogyakarta. Sejak resmi beroperasi dan dibuka untuk umum pada tahun 2023 hingga saat ini, Naomi Studio telah dipercaya menjadi tempat latihan andalan bagi berbagai komunitas dan tim dance ternama di Yogyakarta. Tidak terbatas pada seni tari saja, studio kami dirancang secara multifungsi guna mendukung berbagai kegiatan seni pertunjukan lainnya, mulai dari pelatihan modelling, latihan paduan suara, hingga gelaran drama musikal.</p>
+                        <!-- <p>Kami percaya bahwa setiap gerak, nada, dan ekspresi membutuhkan panggung yang layak. Naomi Studio dirancang untuk menjadi rumah yang inklusif—tempat kolaborasi lintas disiplin untuk melampaui batasan kreatif.</p> -->
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                 {{-- Studio Besar --}}
                 <div class="group">
                     <div class="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden shadow-2xl mb-6">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBru3ocpef44bNhlyzpqE_D6nJi1uuhAD0SdzhUWURGOoXNMSvlzriZ2Kq6gpgitPeQYdWNM2kZpww7nLr3WVaXMep5aQ6fM9a4HZanNiR1HkjhCsL7YwP_CWyT1bo_psSv8yD9r1qZnFy6VhNWr27vBkikBePOhZQ1bw1cK6FDKOXNh7jpbrkguTp7x7ouQzVT08TiU5NsMuz7hwaCILoBEbva7eduAAxSn8MTyAl7uJbnVjZFmSHe8c8QIQuHV-eE4TKuVMnJlvqB" 
+                        <img src="{{ asset('storage/aset aku/about s b.JPG') }}" 
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Studio Besar">
                         <div class="absolute top-6 right-6 bg-naomi-white/90 backdrop-blur-md px-5 py-2 rounded-full shadow-sm">
                             <p class="text-[10px] font-black tracking-widest text-charcoal uppercase">120 SQM</p>
@@ -103,7 +103,7 @@
                 {{-- Studio Kecil --}}
                 <div class="group md:mt-14">
                     <div class="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden shadow-2xl mb-6">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBWq5wFsgqWn-8dTYyppgj2v7REU8oW2Yy3CdgNCnr95XH2BfE9Q4sBd6vxP_Yyw4cEVyFHGkdHZ7Mee6DaqVeX_cobHYtDkG3N1JiDbHzmELvqsNv03RaLAqebeOQMaV2B-7BSxSbzX1wzwOu5CIY2KDELwpQfvCgKYEjdYLUnixN1rLTPszY22nWxqw6oRtcrAnomVNNwEz0ML4hYpyMQLbCz5MCbrvBwP3-lNnR67OH6fQJJgLfPQEVHBsPfvL_k05GoO7nJZA-" 
+                        <img src="{{ asset('storage/aset aku/about s k.PNG') }}"
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Studio Kecil">
                         <div class="absolute top-6 right-6 bg-naomi-white/90 backdrop-blur-md px-5 py-2 rounded-full shadow-sm">
                             <p class="text-[10px] font-black tracking-widest text-charcoal uppercase">45 SQM</p>
@@ -131,7 +131,7 @@
                     <p class="text-primary font-black text-[10px] uppercase tracking-[0.4em]">Vision</p>
                     <h4 class="serif-title text-4xl font-bold tracking-tight text-charcoal">Gravitasi Seni</h4>
                     <p class="text-charcoal/70 leading-relaxed font-light">
-                        Menjadi pusat seni gerak kontemporer di Yogyakarta yang diakui secara internasional atas kualitas dan integritas artistiknya.
+                        Menjadi studio kreatif serbaguna pilihan utama di Yogyakarta yang menyediakan ruang latihan premium, nyaman, dan inklusif untuk mendukung pertumbuhan komunitas seni pertunjukan
                     </p>
                 </div>
 
@@ -140,7 +140,7 @@
                     <p class="text-primary font-black text-[10px] uppercase tracking-[0.4em]">Mission</p>
                     <h4 class="serif-title text-4xl font-bold tracking-tight text-charcoal">Eksplorasi</h4>
                     <p class="text-charcoal/70 leading-relaxed font-light">
-                        Menyediakan fasilitas premium yang mendukung kebebasan berekspresi serta membangun ekosistem kolaboratif yang inklusif.
+                        Menyediakan dan merawat fasilitas studio berkualitas tinggi, menghadirkan wadah yang fleksibel dan adaptif untuk berbagai disiplin seni, dan menjadi mitra tepercaya bagi para pegiat seni lokal di Yogyakarta dalam mengasah bakat dan mengembangkan potensi mereka.
                     </p>
                 </div>
 
@@ -148,7 +148,7 @@
                 <div class="space-y-4">
                     <p class="text-primary font-black text-[10px] uppercase tracking-[0.4em]">Core Values</p>
                     <div class="grid grid-cols-1 gap-3">
-                        @foreach(['Inspirasi', 'Kualitas', 'Komunitas'] as $value)
+                        @foreach(['Kualitas', 'Multifungsi', 'Pertumbuhan Komunitas'] as $value)
                         <div class="flex items-center gap-4 group">
                             <div class="w-8 h-[1px] bg-primary group-hover:w-12 transition-all"></div>
                             <span class="serif-title text-2xl font-light text-charcoal">{{ $value }}</span>
